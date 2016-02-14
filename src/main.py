@@ -91,12 +91,14 @@ class RowTiles(object):
         self.row_tiles = row_tiles_template.format(row_line_string_blank,
                                                    row_line_string_pieces)
 class Board(object):
-    def __init__(self, description, orientation):
+    """Returns string of board given current state description"""
+    def __init__(self, description, black_bottom):
         for row in description:
-            print RowTiles("odd", "RNBQKBNR").row_tiles
-            
+            print RowTiles("odd", row).row_tiles
+            print black_bottom
+
 if __name__ == '__main__':
-    description = ("RNBQKBNR", "PPPPPPPP", None, None, 
-                   None, None, "pppppppp", "rnbqkbnr")
-    board = Board(description, black_bottom = True)
-    print board
+    BOARD_DESCRIPTION = ("RNBQKBNR", "PPPPPPPP", None, None,
+                         None, None, "pppppppp", "rnbqkbnr")
+    BOARD = Board(BOARD_DESCRIPTION, black_bottom=True)
+    print BOARD
