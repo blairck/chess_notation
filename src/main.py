@@ -22,6 +22,7 @@ class TileLine(object):
                 return self.tile_line_template.format(self.white)
             elif color == 'b':
                 return self.tile_line_template.format(self.black)
+        raise ValueError('Unknown color value: {0}'.format(color))
 
 class RowLine(object):
     """Represents a line in a particular row. Can be an even or odd row."""
@@ -90,15 +91,39 @@ class RowTiles(object):
         row_tiles_template = "{0}\n{1}\n{0}"
         self.row_tiles = row_tiles_template.format(row_line_string_blank,
                                                    row_line_string_pieces)
+    def __str__(self):
+        return self.row_tiles
+
 class Board(object):
-    """Returns string of board given current state description"""
-    def __init__(self, description, black_bottom):
+    """Returns string of board given current state description.
+    Setting orientation=True means that black appears on the bottom."""
+    def __init__(self, description, orientation=True):
+        self.board_string = ""
+        print orientation
+        #Orientation = False;8(even),7(odd),6(even),5(odd),4(even)
+        #,3(odd),2(even),1(odd)
+        #Orientation = True; 1(odd),2(even),3(odd),4(even)
+        #,5(odd),6(even),7(odd),8(even)
+        control = 1
+        if orientation is False:
+            control = 0
         for row in description:
-            print RowTiles("odd", row).row_tiles
-            print black_bottom
+            result = control % 2
+            if result == 1:
+                parity = "odd"
+            else:
+                parity = "even"
+            if row:
+                self.board_string += str(RowTiles(parity, row[::-1]))
+            else:
+                self.board_string += str(RowTiles(parity))
+            control += 1
+
+    def __str__(self):
+        return self.board_string
 
 if __name__ == '__main__':
     BOARD_DESCRIPTION = ("RNBQKBNR", "PPPPPPPP", None, None,
                          None, None, "pppppppp", "rnbqkbnr")
-    BOARD = Board(BOARD_DESCRIPTION, black_bottom=True)
+    BOARD = Board(BOARD_DESCRIPTION, orientation=True)
     print BOARD
