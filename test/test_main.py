@@ -6,13 +6,15 @@ class TestTileLine(unittest.TestCase):
     """Tests for TileLine class"""
     def test_white_color(self):
         """Input with 'w'"""
-        result = main.TileLine('w').line
-        self.assertEqual(result, '       ')
+        actual_result = main.TileLine('w').line
+        expected_result = '       '
+        self.assertEqual(actual_result, expected_result)
 
     def test_black_color(self):
         """Input with 'b'"""
-        result = main.TileLine('b').line
-        self.assertEqual(result, "|||||||")
+        actual_result = main.TileLine('b').line
+        expected_result = "|||||||"
+        self.assertEqual(actual_result, expected_result)
 
     def test_nonexistant_color(self):
         """Input with 'z' raises error"""
@@ -20,52 +22,58 @@ class TestTileLine(unittest.TestCase):
 
     def test_black_with_piece(self):
         """Black line with piece"""
-        result = main.TileLine('b', 'K').line
-        self.assertEqual(result, "|| K ||")
+        actual_result = main.TileLine('b', 'K').line
+        expected_result = "|| K ||"
+        self.assertEqual(actual_result, expected_result)
 
     def test_white_with_piece(self):
         """White line with piece"""
-        result = main.TileLine('w', 'K').line
-        self.assertEqual(result, "   K   ")
+        actual_result = main.TileLine('w', 'K').line
+        expected_result = "   K   "
+        self.assertEqual(actual_result, expected_result)
 
 class TestRowLine(unittest.TestCase):
     """Tests for RowLine class"""
     def test_odd_row(self):
         """Test odd row without pieces"""
-        result = main.RowLine("odd").row
-        expected = '       |||||||       |||||||       |||||||       |||||||'
-        self.assertEqual(result, expected)
+        actual_result = main.RowLine("odd").row
+        expected_result = '       |||||||       |||||||       |||||||       \
+|||||||'
+        self.assertEqual(actual_result, expected_result)
 
     def test_odd_even(self):
         """Test even row without pieces"""
-        result = main.RowLine("even").row
-        expected = '|||||||       |||||||       |||||||       |||||||       '
-        self.assertEqual(result, expected)
+        actual_result = main.RowLine("even").row
+        expected_result = '|||||||       |||||||       |||||||       |||||||\
+       '
+        self.assertEqual(actual_result, expected_result)
 
     def test_odd_row_pieces(self):
         """Test odd row with pieces"""
         pieces = "RNBQKBNR"
-        result = main.RowLine("odd", pieces).row
-        expected = '   R   || N ||   B   || Q ||   K   || B ||   N   || R ||'
-        self.assertEqual(result, expected)
+        actual_result = main.RowLine("odd", pieces).row
+        expected_result = '   R   || N ||   B   || Q ||   K   || B ||   N   \
+|| R ||'
+        self.assertEqual(actual_result, expected_result)
 
     def test_even_row_pieces(self):
         """Test even row with pieces"""
         pieces = "RNBQKBNR"
-        result = main.RowLine("even", pieces).row
-        expected = '|| R ||   N   || B ||   Q   || K ||   B   || N ||   R   '
-        self.assertEqual(result, expected)
+        actual_result = main.RowLine("even", pieces).row
+        expected_result = '|| R ||   N   || B ||   Q   || K ||   B   || N ||\
+   R   '
+        self.assertEqual(actual_result, expected_result)
 
 class TestRowTiles(unittest.TestCase):
     """Tests for RowTiles class"""
     def test_rowtiles(self):
         """For RowTiles class"""
         pieces = "RNBQKBNR"
-        result = main.RowTiles("odd", pieces).row_tiles
-        expected = '       |||||||       |||||||       |||||||       |||||||\
-\n   R   || N ||   B   || Q ||   K   || B ||   N   || R ||\
+        actual_result = main.RowTiles("odd", pieces).row_tiles
+        expected_result = '       |||||||       |||||||       |||||||       \
+|||||||\n   R   || N ||   B   || Q ||   K   || B ||   N   || R ||\
 \n       |||||||       |||||||       |||||||       |||||||'
-        self.assertEqual(result, expected)
+        self.assertEqual(actual_result, expected_result)
 
 class TestBoard(unittest.TestCase):
     """Tests for Board class"""
@@ -73,8 +81,8 @@ class TestBoard(unittest.TestCase):
         """Make board with default args"""
         description = ("RNBQKBNR", "PPPPPPPP", None, None,
                        None, None, "pppppppp", "rnbqkbnr")
-        result = str(main.Board(description, orientation=True))
-        expected = """
+        actual_result = str(main.Board(description, orientation=True))
+        expected_result = """
        |||||||       |||||||       |||||||       |||||||
    R   || N ||   B   || K ||   Q   || B ||   N   || R ||
        |||||||       |||||||       |||||||       |||||||
@@ -100,14 +108,14 @@ class TestBoard(unittest.TestCase):
 || r ||   n   || b ||   k   || q ||   b   || n ||   r   
 |||||||       |||||||       |||||||       |||||||       
 """
-        self.assertEqual(result, expected)
+        self.assertEqual(actual_result, expected_result)
 
     def test_board_reversed(self):
         """Make board with reverse orientation"""
         description = ("RNBQKBNR", "PPPPPPPP", None, None,
                        None, None, "pppppppp", "rnbqkbnr")
-        result = str(main.Board(description, orientation=False))
-        expected = """
+        actual_result = str(main.Board(description, orientation=False))
+        expected_result = """
        |||||||       |||||||       |||||||       |||||||
    r   || n ||   b   || k ||   q   || b ||   n   || r ||
        |||||||       |||||||       |||||||       |||||||
@@ -133,4 +141,4 @@ class TestBoard(unittest.TestCase):
 || R ||   N   || B ||   K   || Q ||   B   || N ||   R   
 |||||||       |||||||       |||||||       |||||||       
 """
-        self.assertEqual(result, expected)
+        self.assertEqual(actual_result, expected_result)
