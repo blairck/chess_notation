@@ -15,10 +15,12 @@ For developers:
 * Coverage
 
 ### Goals ###
+
 * Timed trials of identifying by chess notation an identified square
 * Save last recorded time
 * Customize: board rotation, number of trials
 
 ### Todo ###
+
 Fix - FAIL: test_board_reversed (test.test_main.TestBoard)
 Fix - FAIL: test_board (test.test_main.TestBoard)
