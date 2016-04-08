@@ -1,6 +1,7 @@
 # Description #
 
 This is a console-based game to quiz user on chess notation.
+
 Project Status: Active
 
 ### Requirements ###
@@ -22,5 +23,5 @@ For developers:
 
 ### Todo ###
 
-Fix - FAIL: test_board_reversed (test.test_main.TestBoard)
-Fix - FAIL: test_board (test.test_main.TestBoard)
+* Fix - FAIL: test_board_reversed (test.test_main.TestBoard)
+* Fix - FAIL: test_board (test.test_main.TestBoard)
