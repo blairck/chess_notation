@@ -18,10 +18,13 @@ For developers:
 ### Goals ###
 
 * Timed trials of identifying by chess notation an identified square
+* Algebraic or descriptive notation
 * Save last recorded time
-* Customize: board rotation, number of trials
+* Customize: board rotation, number of trials, type of notation
+* Documentaiton
 
 ### Todo ###
 
 * Fix - FAIL: test_board_reversed (test.test_main.TestBoard)
-* Fix - FAIL: test_board (test.test_main.TestBoard)
+* Add functionality to mark certain squares on the board
+	- In algebraic or descriptive notation
