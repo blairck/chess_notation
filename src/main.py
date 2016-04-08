@@ -88,7 +88,7 @@ class RowTiles(object):
     def __init__(self, parity, pieces=None):
         row_line_string_blank = RowLine(parity).row
         row_line_string_pieces = RowLine(parity, pieces).row
-        row_tiles_template = "{0}\n{1}\n{0}"
+        row_tiles_template = "\n{0}\n{1}\n{0}"
         self.row_tiles = row_tiles_template.format(row_line_string_blank,
                                                    row_line_string_pieces)
     def __str__(self):
@@ -118,6 +118,7 @@ class Board(object):
             else:
                 self.board_string += str(RowTiles(parity))
             control += 1
+        self.board_string = "{0}\n".format(self.board_string)
 
     def __str__(self):
         return self.board_string

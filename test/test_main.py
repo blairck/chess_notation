@@ -70,7 +70,7 @@ class TestRowTiles(unittest.TestCase):
         """For RowTiles class"""
         pieces = "RNBQKBNR"
         actual_result = main.RowTiles("odd", pieces).row_tiles
-        expected_result = '       |||||||       |||||||       |||||||       \
+        expected_result = '\n       |||||||       |||||||       |||||||       \
 |||||||\n   R   || N ||   B   || Q ||   K   || B ||   N   || R ||\
 \n       |||||||       |||||||       |||||||       |||||||'
         self.assertEqual(actual_result, expected_result)
