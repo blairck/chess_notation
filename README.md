@@ -25,6 +25,6 @@ For developers:
 
 ### Todo ###
 
-* Fix - FAIL: test_board_reversed (test.test_main.TestBoard)
 * Add functionality to mark certain squares on the board
+	- Mapping of algebraic to descriptive notation
 	- In algebraic or descriptive notation

@@ -100,13 +100,9 @@ class Board(object):
     def __init__(self, description, orientation=True):
         self.board_string = ""
         print orientation
-        #Orientation = False;8(even),7(odd),6(even),5(odd),4(even)
-        #,3(odd),2(even),1(odd)
-        #Orientation = True; 1(odd),2(even),3(odd),4(even)
-        #,5(odd),6(even),7(odd),8(even)
         control = 1
         if orientation is False:
-            control = 0
+            description = list(reversed(description))
         for row in description:
             result = control % 2
             if result == 1:
