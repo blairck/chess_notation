@@ -19,9 +19,10 @@ For developers:
 
 * Timed trials of identifying by chess notation an identified square
 * Algebraic or descriptive notation
+* List of starting positions from famous games
 * Save last recorded time
 * Customize: board rotation, number of trials, type of notation
-* Documentaiton
+* Documentation
 
 ### Todo ###
 
