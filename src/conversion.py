@@ -26,10 +26,10 @@ notation_map = (('a1','qr1','qr8'),('b1','qn1','qn8'),('c1','qb1','qb8'),
 x_axis = ('a','b','c','d','e','f','g','h')
 y_axis = ('1','2','3','4','5','6','7','8')
 for i in range(1000000):
-	x_rand = choice(x_axis)
-	y_rand = choice(y_axis)
-	location = "{0}{1}".format(x_rand, y_rand)
-	for item in notation_map:
-		if location == item[0]:
-			#print "{0} -> {1}".format(location, item[1])
-			break
+        x_rand = choice(x_axis)
+        y_rand = choice(y_axis)
+        location = "{0}{1}".format(x_rand, y_rand)
+        for item in notation_map:
+                if location == item[0]:
+                        #print "{0} -> {1}".format(location, item[1])
+                        break
