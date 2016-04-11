@@ -23,13 +23,35 @@ notation_map = (('a1','qr1','qr8'),('b1','qn1','qn8'),('c1','qb1','qb8'),
                 ('e8','k8','k1'),('f8','kb8','kb1'),('g8','kn8','kn1'),
                 ('h8','kr8','kr1'),)
 
-x_axis = ('a','b','c','d','e','f','g','h')
-y_axis = ('1','2','3','4','5','6','7','8')
-for i in range(1000000):
-        x_rand = choice(x_axis)
-        y_rand = choice(y_axis)
-        location = "{0}{1}".format(x_rand, y_rand)
-        for item in notation_map:
-                if location == item[0]:
-                        #print "{0} -> {1}".format(location, item[1])
-                        break
+# x_axis = ('a','b','c','d','e','f','g','h')
+# y_axis = ('1','2','3','4','5','6','7','8')
+# for i in range(1):
+#     x_rand = choice(x_axis)
+#     y_rand = choice(y_axis)
+#     location = "{0}{1}".format(x_rand, y_rand)
+#     for item in notation_map:
+#         if location == item[0]:
+#             print "{0} -> {1}".format(location, item[1])
+#             break
+
+class NotationConverter(object):
+    def __init__(self):
+        self.np = notation_map
+
+    def alg_search(self, location):
+        for item in self.np:
+            if location == item[0]:
+                return item
+
+    def desc_search(self, color, location):
+        if color == "white":
+            item_index = 1
+        else:
+            item_index = 2
+        for item in self.np:
+            if location == item[item_index]:
+                return item
+
+    def alg_to_desc(self, color):
+        if color == white:
+            pass
