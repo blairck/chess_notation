@@ -99,7 +99,7 @@ class Board(object):
     Setting orientation=True means that black appears on the bottom."""
     def __init__(self, description, orientation=True):
         self.board_string = ""
-        print orientation
+        print(orientation)
         control = 1
         if orientation is False:
             description = list(reversed(description))
@@ -123,4 +123,4 @@ if __name__ == '__main__':
     BOARD_DESCRIPTION = ("RNBQKBNR", "PPPPPPPP", None, None,
                          None, None, "pppppppp", "rnbqkbnr")
     BOARD = Board(BOARD_DESCRIPTION, orientation=True)
-    print BOARD
+    print(BOARD)
