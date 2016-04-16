@@ -60,6 +60,16 @@ class NotationConverter(object):
                 return item
         raise LookupError("Unable to find: {0}".format(location))
 
-    # def alg_to_desc(self, color):
-    #     if color == 'white':
-    #         pass
+    def alg_to_desc(self, location, color):
+        """Converts an algebraic to descriptive position"""
+        position_map = self.alg_search(location)
+        if color == "white":
+            return position_map[1]
+        else:
+            return position_map[2]
+
+    def desc_to_alg(self, location, color):
+        """Converts a descriptive to algebraic position"""
+        position_map = self.desc_search(location, color)
+        return position_map[0]
+
