@@ -22,7 +22,7 @@ class TestNotationConverter(unittest.TestCase):
     def test_alg_search_nonexistant(self):
         """Input which does not exist"""
         n_con = conversion.NotationConverter()
-        self.assertRaises(LookupError, n_con.alg_search, 'f99')
+        self.assertRaises(KeyError, n_con.alg_search, 'f99')
 
     def test_desc_search_good_white(self):
         """Input with good value"""
@@ -41,7 +41,12 @@ class TestNotationConverter(unittest.TestCase):
     def test_desc_search_nonexistant(self):
         """Input with nonexistant value"""
         n_con = conversion.NotationConverter()
-        self.assertRaises(LookupError, n_con.desc_search, 'qn333', 'white')
+        self.assertRaises(KeyError, n_con.desc_search, 'qn333', 'white')
+
+    def test_desc_search_bad_color(self):
+        """Input with wrong color"""
+        n_con = conversion.NotationConverter()
+        self.assertRaises(ValueError, n_con.desc_search, 'qn3', 'green')
 
     def test_alg_to_desc_good_black(self):
         """Input with good value"""
@@ -60,7 +65,12 @@ class TestNotationConverter(unittest.TestCase):
     def test_alg_to_desc_nonexistant(self):
         """Input with nonexistant value"""
         n_con = conversion.NotationConverter()
-        self.assertRaises(LookupError, n_con.alg_to_desc, 'b999', 'black')
+        self.assertRaises(KeyError, n_con.alg_to_desc, 'b999', 'black')
+
+    def test_alg_to_desc_bad_color(self):
+        """Input with nonexistant value"""
+        n_con = conversion.NotationConverter()
+        self.assertRaises(ValueError, n_con.alg_to_desc, 'h2', 'red')
 
     def test_desc_to_alg_good_black(self):
         """Input with good value"""
@@ -79,4 +89,4 @@ class TestNotationConverter(unittest.TestCase):
     def test_desc_to_alg_nonexistant(self):
         """Input with nonexistant value"""
         n_con = conversion.NotationConverter()
-        self.assertRaises(LookupError, n_con.desc_to_alg, 'kb88', 'white')
+        self.assertRaises(KeyError, n_con.desc_to_alg, 'kb88', 'white')
