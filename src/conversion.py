@@ -47,26 +47,32 @@ class NotationConverter(object):
         for item in self.n_map:
             if location == item[0]:
                 return item
-        raise LookupError("Unable to find: {0}".format(location))
+        raise KeyError("Unable to find: {0}".format(location))
 
     def desc_search(self, location, color):
         """Search for a particular descriptive notation with color"""
         if color == "white":
             item_index = 1
-        else:
+        elif color == "black":
             item_index = 2
+        else:
+            error_msg = "Player color is not black or white: {0}"
+            raise ValueError(error_msg.format(color))
         for item in self.n_map:
             if location == item[item_index]:
                 return item
-        raise LookupError("Unable to find: {0}".format(location))
+        raise KeyError("Unable to find: {0}".format(location))
 
     def alg_to_desc(self, location, color):
         """Converts an algebraic to descriptive position"""
         position_map = self.alg_search(location)
         if color == "white":
             return position_map[1]
-        else:
+        elif color == "black":
             return position_map[2]
+        else:
+            error_msg = "Player color is not black or white: {0}"
+            raise ValueError(error_msg.format(color))
 
     def desc_to_alg(self, location, color):
         """Converts a descriptive to algebraic position"""
