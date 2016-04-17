@@ -37,31 +37,31 @@ class TestRowLine(unittest.TestCase):
     def test_odd_row(self):
         """Test odd row without pieces"""
         actual_result = main.RowLine("odd").row
-        expected_result = '       |||||||       |||||||       |||||||       \
-|||||||'
-        self.assertEqual(actual_result, expected_result)
-
-    def test_odd_even(self):
-        """Test even row without pieces"""
-        actual_result = main.RowLine("even").row
         expected_result = '|||||||       |||||||       |||||||       |||||||\
        '
+        self.assertEqual(actual_result, expected_result)
+
+    def test_even_row(self):
+        """Test even row without pieces"""
+        actual_result = main.RowLine("even").row
+        expected_result = '       |||||||       |||||||       |||||||       \
+|||||||'
         self.assertEqual(actual_result, expected_result)
 
     def test_odd_row_pieces(self):
         """Test odd row with pieces"""
         pieces = "RNBQKBNR"
         actual_result = main.RowLine("odd", pieces).row
-        expected_result = '   R   || N ||   B   || Q ||   K   || B ||   N   \
-|| R ||'
+        expected_result = '|| R ||   N   || B ||   Q   || K ||   B   || N ||\
+   R   '
         self.assertEqual(actual_result, expected_result)
 
     def test_even_row_pieces(self):
         """Test even row with pieces"""
         pieces = "RNBQKBNR"
         actual_result = main.RowLine("even", pieces).row
-        expected_result = '|| R ||   N   || B ||   Q   || K ||   B   || N ||\
-   R   '
+        expected_result = '   R   || N ||   B   || Q ||   K   || B ||   N   \
+|| R ||'
         self.assertEqual(actual_result, expected_result)
 
 class TestRowTiles(unittest.TestCase):
@@ -70,54 +70,29 @@ class TestRowTiles(unittest.TestCase):
         """For RowTiles class"""
         pieces = "RNBQKBNR"
         actual_result = main.RowTiles("odd", pieces).row_tiles
-        expected_result = '\n       |||||||       |||||||       |||||||       \
-|||||||\n   R   || N ||   B   || Q ||   K   || B ||   N   || R ||\
-\n       |||||||       |||||||       |||||||       |||||||'
+        expected_result = \
+'\n|||||||       |||||||       |||||||       |||||||       \
+\n|| R ||   N   || B ||   Q   || K ||   B   || N ||   R   \
+\n|||||||       |||||||       |||||||       |||||||       '
         self.assertEqual(actual_result, expected_result)
 
 class TestBoard(unittest.TestCase):
     """Tests for Board class"""
+    maxDiff = None
     def test_board(self):
         """Make board with default args"""
-        description = ("RNBQKBNR", "PPPPPPPP", None, None,
-                       None, None, "pppppppp", "rnbqkbnr")
+        description = ("rnbqkbnr",
+                       "pppppppp",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "PPPPPPPP",
+                       "RNBQKBNR",)
         actual_result = str(main.Board(description, orientation=True))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
-   R   || N ||   B   || K ||   Q   || B ||   N   || R ||
-       |||||||       |||||||       |||||||       |||||||
-|||||||       |||||||       |||||||       |||||||       
-|| P ||   P   || P ||   P   || P ||   P   || P ||   P   
-|||||||       |||||||       |||||||       |||||||       
-       |||||||       |||||||       |||||||       |||||||
-       |||||||       |||||||       |||||||       |||||||
-       |||||||       |||||||       |||||||       |||||||
-|||||||       |||||||       |||||||       |||||||       
-|||||||       |||||||       |||||||       |||||||       
-|||||||       |||||||       |||||||       |||||||       
-       |||||||       |||||||       |||||||       |||||||
-       |||||||       |||||||       |||||||       |||||||
-       |||||||       |||||||       |||||||       |||||||
-|||||||       |||||||       |||||||       |||||||       
-|||||||       |||||||       |||||||       |||||||       
-|||||||       |||||||       |||||||       |||||||       
-       |||||||       |||||||       |||||||       |||||||
-   p   || p ||   p   || p ||   p   || p ||   p   || p ||
-       |||||||       |||||||       |||||||       |||||||
-|||||||       |||||||       |||||||       |||||||       
-|| r ||   n   || b ||   k   || q ||   b   || n ||   r   
-|||||||       |||||||       |||||||       |||||||       
-"""
-        self.assertEqual(actual_result, expected_result)
-
-    def test_board_reversed(self):
-        """Make board with reverse orientation"""
-        description = ("RNBQKBNR", "PPPPPPPP", None, None,
-                       None, None, "pppppppp", "rnbqkbnr")
-        actual_result = str(main.Board(description, orientation=False))
-        expected_result = """
-       |||||||       |||||||       |||||||       |||||||
-   r   || n ||   b   || k ||   q   || b ||   n   || r ||
+   r   || n ||   b   || q ||   k   || b ||   n   || r ||
        |||||||       |||||||       |||||||       |||||||
 |||||||       |||||||       |||||||       |||||||       
 || p ||   p   || p ||   p   || p ||   p   || p ||   p   
@@ -138,7 +113,46 @@ class TestBoard(unittest.TestCase):
    P   || P ||   P   || P ||   P   || P ||   P   || P ||
        |||||||       |||||||       |||||||       |||||||
 |||||||       |||||||       |||||||       |||||||       
-|| R ||   N   || B ||   K   || Q ||   B   || N ||   R   
+|| R ||   N   || B ||   Q   || K ||   B   || N ||   R   
+|||||||       |||||||       |||||||       |||||||       
+"""
+        self.assertEqual(actual_result, expected_result)
+
+    def test_board_reversed(self):
+        """Make board with reverse orientation"""
+        description = ("rnbqkbnr",
+                       "pppppppp",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "PPPPPPPP",
+                       "RNBQKBNR",)
+        actual_result = str(main.Board(description, orientation=False))
+        expected_result = """
+       |||||||       |||||||       |||||||       |||||||
+   R   || N ||   B   || Q ||   K   || B ||   N   || R ||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|| P ||   P   || P ||   P   || P ||   P   || P ||   P   
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+   p   || p ||   p   || p ||   p   || p ||   p   || p ||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|| r ||   n   || b ||   q   || k ||   b   || n ||   r   
 |||||||       |||||||       |||||||       |||||||       
 """
         self.assertEqual(actual_result, expected_result)

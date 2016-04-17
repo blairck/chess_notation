@@ -4,7 +4,9 @@ class TileLine(object):
     """Class which represents a single line of a tile as a string"""
     def __init__(self, color, piece=None, white=" ", black='|'):
         self.tile_line_template = "{0}{0}{0}{0}{0}{0}{0}"
-        if piece:
+        if piece == " ":
+            self.tile_line_template = "{0}{0}{0}{0}{0}{0}{0}"
+        elif piece:
             self.tile_line_template = "{0}{0} {1} {0}{0}"
         self.white = white
         self.black = black
@@ -29,8 +31,8 @@ class RowLine(object):
     def __init__(self, parity, pieces=None):
         self.white_tile = TileLine('w').line
         self.black_tile = TileLine('b').line
-        self.odd_row_line_template = "{0}{1}{0}{1}{0}{1}{0}{1}"
-        self.even_row_line_template = "{1}{0}{1}{0}{1}{0}{1}{0}"
+        self.odd_row_line_template = "{1}{0}{1}{0}{1}{0}{1}{0}"
+        self.even_row_line_template = "{0}{1}{0}{1}{0}{1}{0}{1}"
         self.pieces_row_line_template = "{0}{1}{2}{3}{4}{5}{6}{7}"
         if pieces:
             self.row = self.make_row_pieces(parity, pieces)
@@ -39,7 +41,7 @@ class RowLine(object):
 
     def make_row_pieces(self, parity, pieces):
         """Makes row of characters with pieces"""
-        if parity == "odd":
+        if parity == "even":
             white_tile1 = TileLine('w', pieces[0]).line
             black_tile1 = TileLine('b', pieces[1]).line
             white_tile2 = TileLine('w', pieces[2]).line
@@ -56,7 +58,7 @@ class RowLine(object):
                                                         black_tile3,
                                                         white_tile4,
                                                         black_tile4)
-        elif parity == "even":
+        elif parity == "odd":
             black_tile1 = TileLine('b', pieces[0]).line
             white_tile1 = TileLine('w', pieces[1]).line
             black_tile2 = TileLine('b', pieces[2]).line
@@ -96,11 +98,11 @@ class RowTiles(object):
 
 class Board(object):
     """Returns string of board given current state description.
-    Setting orientation=True means that black appears on the bottom."""
+    Setting orientation=True means that white appears on the bottom."""
     def __init__(self, description, orientation=True):
         self.board_string = ""
         print(orientation)
-        control = 1
+        control = 0
         if orientation is False:
             description = list(reversed(description))
         for row in description:
@@ -110,7 +112,7 @@ class Board(object):
             else:
                 parity = "even"
             if row:
-                self.board_string += str(RowTiles(parity, row[::-1]))
+                self.board_string += str(RowTiles(parity, row))
             else:
                 self.board_string += str(RowTiles(parity))
             control += 1
@@ -120,7 +122,13 @@ class Board(object):
         return self.board_string
 
 if __name__ == '__main__':
-    BOARD_DESCRIPTION = ("RNBQKBNR", "PPPPPPPP", None, None,
-                         None, None, "pppppppp", "rnbqkbnr")
+    BOARD_DESCRIPTION = ("rnbqkbnr",
+                         "pppppppp",
+                         "        ",
+                         "        ",
+                         "        ",
+                         "        ",
+                         "PPPPPPPP",
+                         "RNBQKBNR",)
     BOARD = Board(BOARD_DESCRIPTION, orientation=True)
     print(BOARD)
