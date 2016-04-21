@@ -1,34 +1,34 @@
-"""Tests for main module"""
+"""Tests for board module"""
 import unittest
-from src import main
+from src import board
 
 class TestTileLine(unittest.TestCase):
     """Tests for TileLine class"""
     def test_white_color(self):
         """Input with 'w'"""
-        actual_result = main.TileLine('w').line
+        actual_result = board.TileLine('w').line
         expected_result = '       '
         self.assertEqual(actual_result, expected_result)
 
     def test_black_color(self):
         """Input with 'b'"""
-        actual_result = main.TileLine('b').line
+        actual_result = board.TileLine('b').line
         expected_result = "|||||||"
         self.assertEqual(actual_result, expected_result)
 
     def test_nonexistant_color(self):
         """Input with 'z' raises error"""
-        self.assertRaises(ValueError, main.TileLine, 'z')
+        self.assertRaises(ValueError, board.TileLine, 'z')
 
     def test_black_with_piece(self):
         """Black line with piece"""
-        actual_result = main.TileLine('b', 'K').line
+        actual_result = board.TileLine('b', 'K').line
         expected_result = "|| K ||"
         self.assertEqual(actual_result, expected_result)
 
     def test_white_with_piece(self):
         """White line with piece"""
-        actual_result = main.TileLine('w', 'K').line
+        actual_result = board.TileLine('w', 'K').line
         expected_result = "   K   "
         self.assertEqual(actual_result, expected_result)
 
@@ -36,14 +36,14 @@ class TestRowLine(unittest.TestCase):
     """Tests for RowLine class"""
     def test_odd_row(self):
         """Test odd row without pieces"""
-        actual_result = main.RowLine("odd").row
+        actual_result = board.RowLine("odd").row
         expected_result = '|||||||       |||||||       |||||||       |||||||\
        '
         self.assertEqual(actual_result, expected_result)
 
     def test_even_row(self):
         """Test even row without pieces"""
-        actual_result = main.RowLine("even").row
+        actual_result = board.RowLine("even").row
         expected_result = '       |||||||       |||||||       |||||||       \
 |||||||'
         self.assertEqual(actual_result, expected_result)
@@ -51,7 +51,7 @@ class TestRowLine(unittest.TestCase):
     def test_odd_row_pieces(self):
         """Test odd row with pieces"""
         pieces = "RNBQKBNR"
-        actual_result = main.RowLine("odd", pieces).row
+        actual_result = board.RowLine("odd", pieces).row
         expected_result = '|| R ||   N   || B ||   Q   || K ||   B   || N ||\
    R   '
         self.assertEqual(actual_result, expected_result)
@@ -59,7 +59,7 @@ class TestRowLine(unittest.TestCase):
     def test_even_row_pieces(self):
         """Test even row with pieces"""
         pieces = "RNBQKBNR"
-        actual_result = main.RowLine("even", pieces).row
+        actual_result = board.RowLine("even", pieces).row
         expected_result = '   R   || N ||   B   || Q ||   K   || B ||   N   \
 || R ||'
         self.assertEqual(actual_result, expected_result)
@@ -69,7 +69,7 @@ class TestRowTiles(unittest.TestCase):
     def test_rowtiles(self):
         """For RowTiles class"""
         pieces = "RNBQKBNR"
-        actual_result = main.RowTiles("odd", pieces).row_tiles
+        actual_result = board.RowTiles("odd", pieces).row_tiles
         expected_result = \
 '\n|||||||       |||||||       |||||||       |||||||       \
 \n|| R ||   N   || B ||   Q   || K ||   B   || N ||   R   \
@@ -89,7 +89,7 @@ class TestBoard(unittest.TestCase):
                        "        ",
                        "PPPPPPPP",
                        "RNBQKBNR",)
-        actual_result = str(main.Board(description, orientation=True))
+        actual_result = str(board.Board(description, orientation=True))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
    r   || n ||   b   || q ||   k   || b ||   n   || r ||
@@ -128,7 +128,7 @@ class TestBoard(unittest.TestCase):
                        "        ",
                        "PPPPPPPP",
                        "RNBQKBNR",)
-        actual_result = str(main.Board(description, orientation=False))
+        actual_result = str(board.Board(description, orientation=False))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
    R   || N ||   B   || Q ||   K   || B ||   N   || R ||
