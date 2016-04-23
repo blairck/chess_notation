@@ -75,6 +75,7 @@ class RowLine(object):
                                                         white_tile3,
                                                         black_tile4,
                                                         white_tile4)
+        raise ValueError('Unknown parity value: {0}'.format(parity))
 
     def make_row(self, parity):
         """Makes row of characters"""
@@ -84,6 +85,7 @@ class RowLine(object):
         elif parity == "even":
             return self.even_row_line_template.format(self.white_tile,
                                                       self.black_tile)
+        raise ValueError('Unknown parity value: {0}'.format(parity))
 
 class RowTiles(object):
     """Represents a row of tiles on the board. Can be an even or odd row."""

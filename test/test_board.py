@@ -64,6 +64,25 @@ class TestRowLine(unittest.TestCase):
 || R ||'
         self.assertEqual(actual_result, expected_result)
 
+    def test_make_row_pieces_exception(self):
+        """Tests that make_row_pieces rejects invalid parity"""
+        parity_value = "bad_parity"
+        pieces_value = "RNBQKBNR"
+        board_result = board.RowLine("even", pieces_value)
+        self.assertRaises(ValueError,
+                          board_result.make_row_pieces,
+                          parity_value,
+                          pieces_value)
+
+    def test_make_row_exception(self):
+        """Tests that make_row rejects invalid parity"""
+        parity_value = "bad_parity"
+        pieces_value = "RNBQKBNR"
+        board_result = board.RowLine("even", pieces_value)
+        self.assertRaises(ValueError,
+                          board_result.make_row,
+                          parity_value)
+
 class TestRowTiles(unittest.TestCase):
     """Tests for RowTiles class"""
     def test_rowtiles(self):
