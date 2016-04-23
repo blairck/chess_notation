@@ -13,7 +13,7 @@ run:
 	$(ENVIRONMENT)/bin/coverage run test/run_tests.py
 	$(ENVIRONMENT)/bin/python src/main.py
 
-status: lint tests 
+status: tests lint
 	#Overall project status with lint and tests
 
 tests:
