@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """This project quizes the user on chess notation and times the responses"""
+
+from random import randint
+
 class TileLine(object):
     """Class which represents a single line of a tile as a string"""
     def __init__(self, color, piece=None, white=" ", black='|'):
@@ -119,6 +122,12 @@ class Board(object):
                 self.board_string += str(RowTiles(parity))
             control += 1
         self.board_string = "{0}\n".format(self.board_string)
+
+    def identify_random_square(self):
+        return((randint(0,7), randint(0,7)))
+
+    def insert_square_into_description(self, description, square):
+        return description
 
     def __str__(self):
         return self.board_string
