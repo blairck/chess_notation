@@ -124,7 +124,7 @@ class Board(object):
         self.board_string = "{0}\n".format(self.board_string)
 
     def identify_random_square(self):
-        return((randint(0,7), randint(0,7)))
+        return(randint(0, 7), randint(0, 7))
 
     def insert_square_into_description(self, description, square):
         return description

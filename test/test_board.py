@@ -97,6 +97,19 @@ class TestRowTiles(unittest.TestCase):
 
 class TestBoard(unittest.TestCase):
     """Tests for Board class"""
+    @classmethod
+    def setUpClass(cls):
+        # Shared board description for tests where this required arg
+        # isn't important to the result
+        cls.shared_description = ("rnbqkbnr",
+                                  "pppppppp",
+                                  "        ",
+                                  "        ",
+                                  "        ",
+                                  "        ",
+                                  "PPPPPPPP",
+                                  "RNBQKBNR",)
+
     maxDiff = None
     def test_board(self):
         """Make board with default args"""
@@ -175,3 +188,12 @@ class TestBoard(unittest.TestCase):
 |||||||       |||||||       |||||||       |||||||       
 """
         self.assertEqual(actual_result, expected_result)
+
+    def test_identify_random_square_good(self):
+        description = self.shared_description
+        actual_result = board.Board(description).identify_random_square()
+        actual_result_x = actual_result[0]
+        actual_result_y = actual_result[1]
+        expected_result_compare = 0
+        self.assertTrue(actual_result_x >= expected_result_compare)
+        self.assertTrue(actual_result_y >= expected_result_compare)
