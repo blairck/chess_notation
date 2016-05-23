@@ -197,3 +197,36 @@ class TestBoard(unittest.TestCase):
         expected_result_compare = 0
         self.assertTrue(actual_result_x >= expected_result_compare)
         self.assertTrue(actual_result_y >= expected_result_compare)
+
+    def test_highlight_square(self):
+        description = self.shared_description
+        the_board = board.Board(description)
+        actual_result = the_board.highlight_square(2,3)
+        self.assertTrue(actual_result)
+        actual_result = str(board.Board(description, orientation=True))
+        expected_result = """
+       |||||||       |||||||       |||||||       |||||||
+   r   || n ||   b   || q ||   k   || b ||   n   || r ||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|| p ||   p   || p ||   p   || p ||   p   || p ||   p   
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|||||||   #   |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+   P   || P ||   P   || P ||   P   || P ||   P   || P ||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|| R ||   N   || B ||   Q   || K ||   B   || N ||   R   
+|||||||       |||||||       |||||||       |||||||       
+"""
