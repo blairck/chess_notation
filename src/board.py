@@ -106,6 +106,7 @@ class Board(object):
     Setting orientation=True means that white appears on the bottom."""
     def __init__(self, description, orientation=True):
         self.board_string = ""
+        self.highlight_piece = "#"
         print(orientation)
         control = 0
         if orientation is False:
@@ -128,6 +129,21 @@ class Board(object):
 
     def insert_square_into_description(self, description, square):
         return description
+
+    def highlight_square(self,x_loc,y_loc):
+        # iterate through board and replace piece with self.highlight_piece
+        # probably gonna have to put board description into class variable
+        # Need a function to sub in the right character in a particular row
+        # Need a function to grab the right row based on y_loc and orientation
+        # what should interface be? pass in x,y into new board instance?
+        result_description = ("rnbqkbnr",
+                              "pppppppp",
+                              "        ",
+                              "        ",
+                              "        ",
+                              "        ",
+                              "P#PPPPPP",
+                              "RNBQKBNR",)
 
     def __str__(self):
         return self.board_string
