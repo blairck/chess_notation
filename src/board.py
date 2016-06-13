@@ -129,12 +129,21 @@ class Board(object):
         return(randint(0, 7), randint(0, 7))
 
     def insert_square_into_description(self, description, square):
-        return description
+        """unfinished function. updates self.description"""
+        return self.description
+
+    def highlight_row(self, row_string, x_loc):
+        row_list = list(row_string)
+        row_list[x_loc - 1] = self.highlight_piece
+        return "".join(row_list)
+
+    def grab_row(self):
+        """a function to grab the right row based on y_loc and orientation"""
 
     def highlight_square(self,x_loc,y_loc):
         # iterate through board and replace piece with self.highlight_piece
         # probably gonna have to put board description into class variable
-        # Need a function to sub in the right character in a particular row
+        # Have a function to sub in the right character in a particular row
         # Need a function to grab the right row based on y_loc and orientation
         # what should interface be? pass in x,y into new board instance?
         result_description = ("rnbqkbnr",
