@@ -107,11 +107,12 @@ class Board(object):
     def __init__(self, description, orientation=True):
         self.board_string = ""
         self.highlight_piece = "#"
-        print(orientation)
         control = 0
-        if orientation is False:
-            description = list(reversed(description))
-        for row in description:
+        self.orientation = orientation
+        self.description = description
+        if self.orientation is False:
+            self.description = list(reversed(self.description))
+        for row in self.description:
             result = control % 2
             if result == 1:
                 parity = "odd"
