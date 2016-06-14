@@ -232,19 +232,22 @@ class TestBoard(unittest.TestCase):
 """
         self.assertEqual(actual_result, expected_result)
 
-    def test_highlight_row_good(self):
+    def test_highlight_rowline_good(self):
         description = self.shared_description
         the_board = board.Board(description)
-        actual_result = the_board.highlight_row("rnbqkbnr", 2)
+        actual_result = the_board.highlight_rowline("rnbqkbnr", 2)
         expected_result = 'r#bqkbnr'
         self.assertEqual(actual_result, expected_result)
 
-    def test_highlight_row_bad_index(self):
+    def test_highlight_rowline_bad_index(self):
         description = self.shared_description
         the_board = board.Board(description)
-        self.assertRaises(IndexError, the_board.highlight_row, "rnbqkbnr", 25)
+        self.assertRaises(IndexError,
+                          the_board.highlight_rowline,
+                          "rnbqkbnr",
+                          25)
 
-    def test_highlight_row_bad_row(self):
+    def test_highlight_rowline_bad_row(self):
         description = self.shared_description
         the_board = board.Board(description)
-        self.assertRaises(TypeError, the_board.highlight_row, 5, 2)
+        self.assertRaises(TypeError, the_board.highlight_rowline, 5, 2)
