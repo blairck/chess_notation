@@ -107,9 +107,12 @@ class Board(object):
     def __init__(self, description, orientation=True):
         self.board_string = ""
         self.highlight_piece = "#"
-        control = 0
         self.orientation = orientation
         self.description = description
+        self.board_string = None
+
+    def update_board_string(self):
+        control = 0
         if self.orientation is False:
             self.description = list(reversed(self.description))
         for row in self.description:
@@ -130,14 +133,19 @@ class Board(object):
 
     def insert_square_into_description(self, description, square):
         """unfinished function. updates self.description"""
+        """i feel like there is a larger problem here"""
+        """there isn't an easy way to iterate through the "board"""
+        """the board just gets constructed on demand from the description"""
+        """maybe just change the description and functionify board_string?"""
         return self.description
 
-    def highlight_row(self, row_string, x_loc):
+    def highlight_rowline(self, row_string, x_loc):
         row_list = list(row_string)
         row_list[x_loc - 1] = self.highlight_piece
         return "".join(row_list)
 
-    def grab_row(self):
+    def grab_row(self, y_loc):
+        return y_loc
         """a function to grab the right row based on y_loc and orientation"""
 
     def highlight_square(self,x_loc,y_loc):
