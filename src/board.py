@@ -116,6 +116,7 @@ class Board(object):
         self.description = description
         if not isinstance(self.description, list):
             raise TypeError("Board description is not a list")
+        self.needs_orienting = True
         self.update_board_string()
 
     def update_board_string(self):
@@ -123,9 +124,10 @@ class Board(object):
         for displaying the board to the user"""
         control = 0
         self.board_string = ""
-        if self.orientation is False:
-            #This shouldn't really reverse the description after init
+        if not self.orientation and self.needs_orienting:
             self.description = list(reversed(self.description))
+            # We want to make sure that we reverse the board only once
+            self.needs_orienting = False
         for row in self.description:
             result = control % 2
             if result == 1:
