@@ -199,10 +199,10 @@ class TestBoard(unittest.TestCase):
 
     def test_highlight_square(self):
         description = self.shared_description
-        the_board = board.Board(description)
-        actual_result = the_board.highlight_square(2,3)
-        self.assertTrue(actual_result)
-        actual_result = str(board.Board(description, orientation=True))
+        the_board = board.Board(description, orientation=True)
+        the_board.update_row(2,3)
+        the_board.update_board_string()
+        actual_result = str(the_board)
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
    r   || n ||   b   || q ||   k   || b ||   n   || r ||
