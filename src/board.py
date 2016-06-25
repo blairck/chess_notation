@@ -149,11 +149,11 @@ class Board(object):
         """maybe just change the description and functionify board_string?"""
         return self.description
 
-    def highlight_rowline(self, row_string, x_loc_chess):
+    def highlight_rowline(self, row_string, x_loc):
         """Takes a row from self.description and inserts a highlighted piece
         at x location"""
         row_list = list(row_string)
-        row_list[x_loc_chess - 1] = self.highlight_piece
+        row_list[x_loc] = self.highlight_piece
         return "".join(row_list)
 
     def grab_index(self, y_loc_chess):
