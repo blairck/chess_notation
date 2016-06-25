@@ -154,9 +154,27 @@ class Board(object):
         row_list[x_loc_chess - 1] = self.highlight_piece
         return "".join(row_list)
 
-    def grab_row(self, y_loc):
-        return y_loc
-        """a function to grab the right row based on y_loc and orientation"""
+    def grab_index(self, y_loc_chess):
+        """This grabs the right index based on y_loc_chess and
+        orientation. A coordinate with '_chess' refers to the game coordinate,
+        as opposed to the array coordinate."""
+        if self.orientation:
+            # For when white is on bottom
+            return 8 - y_loc_chess
+        elif not self.orientation:
+            # Black on bottom
+            return y_loc_chess-1
+        else:
+            # We don't know what the orientation should be, but don't assume
+            error_message = "Unexpected value: orientation = {0}"
+            raise ValueError(error_message.format(self.orientation))
+
+    def update_row(self, x_loc_chess, y_loc_chess):
+        """Updates self.description to highlight the given square on the
+        board"""
+        index = self.grab_index(y_loc_chess)
+        row = self.highlight_rowline(self.description[index], x_loc_chess)
+        self.description[index] = row
 
     def highlight_square(self,x_loc,y_loc):
         # iterate through board and replace piece with self.highlight_piece
