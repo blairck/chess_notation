@@ -224,6 +224,47 @@ class TestBoard(unittest.TestCase):
 """
         self.assertEqual(actual_result, expected_result)
 
+    def test_highlight_square_reversed(self):
+        description = ["rnbqkbnr",
+                       "pppppppp",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "PPPPPPPP",
+                       "RNBQKBNR",]
+        the_board = board.Board(description, orientation=False)
+        the_board.update_row(2,3)
+        the_board.update_board_string()
+        actual_result = str(the_board)
+        expected_result = """
+       |||||||       |||||||       |||||||       |||||||
+   R   || N ||   B   || Q ||   K   || B ||   N   || R ||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|| P ||   P   || P ||   P   || P ||   P   || P ||   P   
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||   #   |||||||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+|||||||       |||||||       |||||||       |||||||       
+       |||||||       |||||||       |||||||       |||||||
+   p   || p ||   p   || p ||   p   || p ||   p   || p ||
+       |||||||       |||||||       |||||||       |||||||
+|||||||       |||||||       |||||||       |||||||       
+|| r ||   n   || b ||   q   || k ||   b   || n ||   r   
+|||||||       |||||||       |||||||       |||||||       
+"""
+        self.assertEqual(actual_result, expected_result)
+
     def test_highlight_rowline_good(self):
         description = self.shared_description
         the_board = board.Board(description)
