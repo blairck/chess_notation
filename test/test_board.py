@@ -121,14 +121,7 @@ class TestBoard(unittest.TestCase):
     maxDiff = None
     def test_board(self):
         """Make board with default args"""
-        description = ["rnbqkbnr",
-                       "pppppppp",
-                       "        ",
-                       "        ",
-                       "        ",
-                       "        ",
-                       "PPPPPPPP",
-                       "RNBQKBNR",]
+        description = self.shared_description
         actual_result = str(board.Board(description, orientation=True))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
@@ -160,14 +153,7 @@ class TestBoard(unittest.TestCase):
 
     def test_board_reversed(self):
         """Make board with reverse orientation"""
-        description = ["rnbqkbnr",
-                       "pppppppp",
-                       "        ",
-                       "        ",
-                       "        ",
-                       "        ",
-                       "PPPPPPPP",
-                       "RNBQKBNR",]
+        description = self.shared_description
         actual_result = str(board.Board(description, orientation=False))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
@@ -197,8 +183,15 @@ class TestBoard(unittest.TestCase):
 """
         self.assertEqual(actual_result, expected_result)
 
-    def test_highlight_square(self):
-        description = self.shared_description
+    def test_highlight_square_good(self):
+        description = ["rnbqkbnr",
+                       "pppppppp",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "        ",
+                       "PPPPPPPP",
+                       "RNBQKBNR",]
         the_board = board.Board(description, orientation=True)
         the_board.update_row(2,3)
         the_board.update_board_string()
