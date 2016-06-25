@@ -251,3 +251,6 @@ class TestBoard(unittest.TestCase):
         description = self.shared_description
         the_board = board.Board(description)
         self.assertRaises(TypeError, the_board.highlight_rowline, 5, 2)
+    def test_board_description_not_list(self):
+        description = ("test string in a tuple")
+        self.assertRaises(TypeError, board.Board, description)
