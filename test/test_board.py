@@ -109,26 +109,26 @@ class TestBoard(unittest.TestCase):
     def setUpClass(cls):
         # Shared board description for tests where this required arg
         # isn't important to the result
-        cls.shared_description = ("rnbqkbnr",
+        cls.shared_description = ["rnbqkbnr",
                                   "pppppppp",
                                   "        ",
                                   "        ",
                                   "        ",
                                   "        ",
                                   "PPPPPPPP",
-                                  "RNBQKBNR",)
+                                  "RNBQKBNR",]
 
     maxDiff = None
     def test_board(self):
         """Make board with default args"""
-        description = ("rnbqkbnr",
+        description = ["rnbqkbnr",
                        "pppppppp",
                        "        ",
                        "        ",
                        "        ",
                        "        ",
                        "PPPPPPPP",
-                       "RNBQKBNR",)
+                       "RNBQKBNR",]
         actual_result = str(board.Board(description, orientation=True))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
@@ -160,14 +160,14 @@ class TestBoard(unittest.TestCase):
 
     def test_board_reversed(self):
         """Make board with reverse orientation"""
-        description = ("rnbqkbnr",
+        description = ["rnbqkbnr",
                        "pppppppp",
                        "        ",
                        "        ",
                        "        ",
                        "        ",
                        "PPPPPPPP",
-                       "RNBQKBNR",)
+                       "RNBQKBNR",]
         actual_result = str(board.Board(description, orientation=False))
         expected_result = """
        |||||||       |||||||       |||||||       |||||||
@@ -250,6 +250,7 @@ class TestBoard(unittest.TestCase):
         description = self.shared_description
         the_board = board.Board(description)
         self.assertRaises(TypeError, the_board.highlight_rowline, 5, 2)
+
     def test_board_description_not_list(self):
         description = ("test string in a tuple")
         self.assertRaises(TypeError, board.Board, description)
