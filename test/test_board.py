@@ -95,6 +95,14 @@ class TestRowTiles(unittest.TestCase):
 \n|||||||       |||||||       |||||||       |||||||       '
         self.assertEqual(actual_result, expected_result)
 
+class TestStaticFunctions(unittest.TestCase):
+    """Tests for static function helpers for board"""
+    def test_identify_random_square_good(self):
+        actual_result_x, actual_result_y = board.identify_random_square()
+        expected_result_compare = 0
+        self.assertTrue(actual_result_x >= expected_result_compare)
+        self.assertTrue(actual_result_y >= expected_result_compare)
+
 class TestBoard(unittest.TestCase):
     """Tests for Board class"""
     @classmethod
@@ -188,15 +196,6 @@ class TestBoard(unittest.TestCase):
 |||||||       |||||||       |||||||       |||||||       
 """
         self.assertEqual(actual_result, expected_result)
-
-    def test_identify_random_square_good(self):
-        description = self.shared_description
-        actual_result = board.Board(description).identify_random_square()
-        actual_result_x = actual_result[0]
-        actual_result_y = actual_result[1]
-        expected_result_compare = 0
-        self.assertTrue(actual_result_x >= expected_result_compare)
-        self.assertTrue(actual_result_y >= expected_result_compare)
 
     def test_highlight_square(self):
         description = self.shared_description

@@ -3,6 +3,11 @@
 
 from random import randint
 
+# Static helper functions
+def identify_random_square():
+    """This returns a tuple of a random square on the board"""
+    return(randint(0, 7), randint(0, 7))
+
 class TileLine(object):
     """Class which represents a single line of a tile as a string"""
     def __init__(self, color, piece=None, white=" ", black='|'):
