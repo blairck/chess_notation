@@ -9,8 +9,7 @@ lint:
 	$(ENVIRONMENT)/bin/pylint test/ -rn --rcfile=pylint_config.txt
 
 run:
-	#Run tests and then main.py
-	$(ENVIRONMENT)/bin/coverage run test/run_tests.py
+	#Run the game
 	$(ENVIRONMENT)/bin/python src/main.py
 
 status: tests lint
