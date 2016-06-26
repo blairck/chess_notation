@@ -5,8 +5,9 @@ from random import randint
 
 # Static helper functions
 def identify_random_square():
-    """This returns a tuple of a random square on the board"""
-    return(randint(0, 7), randint(0, 7))
+    """This returns a tuple of a random chess square on the board
+    Note: this returns chess notation, not array notation."""
+    return(randint(1, 8), randint(1, 8))
 
 class TileLine(object):
     """Class which represents a single line of a tile as a string"""
