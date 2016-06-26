@@ -97,7 +97,7 @@ class TestRowTiles(unittest.TestCase):
 
 class TestStaticFunctions(unittest.TestCase):
     """Tests for static function helpers for board"""
-    def test_identify_random_square_good(self):
+    def test_identify_random_square(self):
         actual_result_x, actual_result_y = board.identify_random_square()
         expected_result_compare = 0
         self.assertTrue(actual_result_x >= expected_result_compare)
@@ -183,6 +183,24 @@ class TestBoard(unittest.TestCase):
 """
         self.assertEqual(actual_result, expected_result)
 
+    def test_highlight_square_boundaries(self):
+        """Make sure we highlight_square gives ValueError for out of bounds
+        coordinates"""
+        description = self.shared_description
+        the_board = board.Board(description, orientation=False)
+        self.assertRaises(ValueError, the_board.highlight_square, 0, 2)
+        self.assertRaises(ValueError, the_board.highlight_square, 10, 2)
+        self.assertRaises(ValueError, the_board.highlight_square, 1, 0)
+        self.assertRaises(ValueError, the_board.highlight_square, 4, 9)
+
+    def test_highlight_square_bad(self):
+        """Make sure we highlight_square gives TypeError for bad coordinates"""
+        description = self.shared_description
+        the_board = board.Board(description, orientation=False)
+        self.assertRaises(TypeError, the_board.highlight_square, 'sz', 2)
+        self.assertRaises(TypeError, the_board.highlight_square, 4, 'qq')
+        self.assertRaises(TypeError, the_board.highlight_square, 'ab', 'cd')
+
     def test_highlight_square_good(self):
         description = ["rnbqkbnr",
                        "pppppppp",
@@ -193,7 +211,7 @@ class TestBoard(unittest.TestCase):
                        "PPPPPPPP",
                        "RNBQKBNR",]
         the_board = board.Board(description, orientation=True)
-        the_board.update_row(2,3)
+        the_board.highlight_square(2, 3)
         the_board.update_board_string()
         actual_result = str(the_board)
         expected_result = """
@@ -234,7 +252,7 @@ class TestBoard(unittest.TestCase):
                        "PPPPPPPP",
                        "RNBQKBNR",]
         the_board = board.Board(description, orientation=False)
-        the_board.update_row(2,3)
+        the_board.highlight_square(2, 3)
         the_board.update_board_string()
         actual_result = str(the_board)
         expected_result = """
