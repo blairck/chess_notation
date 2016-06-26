@@ -26,16 +26,28 @@ NOTATION_MAP = (('a1', 'qr1', 'qr8'), ('b1', 'qn1', 'qn8'),
                 ('e8', 'k8', 'k1'), ('f8', 'kb8', 'kb1'), ('g8', 'kn8', 'kn1'),
                 ('h8', 'kr8', 'kr1'),)
 
-# x_axis = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
-# y_axis = ('1', '2', '3', '4', '5', '6', '7', '8')
-# for i in range(1):
-#     x_rand = choice(x_axis)
-#     y_rand = choice(y_axis)
-#     location = "{0}{1}".format(x_rand, y_rand)
-#     for item in notation_map:
-#         if location == item[0]:
-#             print "{0} -> {1}".format(location, item[1])
-#             break
+# Static helper functions
+def coordinate_to_alg(x_chess, y_chess):
+    xy_min_chess = 1
+    xy_max_chess = 8
+    if (not isinstance(x_chess, int) or
+            not isinstance(y_chess, int)):
+        error_message = "Bad value coordinates: \
+x_chess = {0}, y_chess = {1}".format(x_chess, y_chess)
+        raise TypeError("Coordinates are not ints")
+    elif (x_chess < xy_min_chess or
+          x_chess > xy_max_chess or
+          y_chess < xy_min_chess or
+          y_chess > xy_max_chess):
+        error_message = "Unexpected value coordinates: \
+x_chess = {0}, y_chess = {1}".format(x_chess, y_chess)
+        raise ValueError(error_message)
+
+    result = ""
+    notation_letters = 'abcdefgh'
+    result = result + notation_letters[x_chess-1]
+    result = result + str(y_chess)
+    return result
 
 class NotationConverter(object):
     """Class converts notation between algebraic and descriptive notation"""
