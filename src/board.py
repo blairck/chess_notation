@@ -176,9 +176,24 @@ class Board(object):
             error_message = "Unexpected value: orientation = {0}"
             raise ValueError(error_message.format(self.orientation))
 
-    def update_row(self, x_loc_chess, y_loc_chess):
+    def highlight_square(self, x_loc_chess, y_loc_chess):
         """Updates self.description to highlight the given square on the
         board"""
+        xy_min_chess = 1
+        xy_max_chess = 8
+        if (not isinstance(x_loc_chess, int) or
+                not isinstance(y_loc_chess, int)):
+            error_message = "Bad value coordinates: \
+x_loc_chess = {0}, y_loc_chess = {1}".format(x_loc_chess, y_loc_chess)
+            raise TypeError("Board description is not a list")
+        elif (x_loc_chess < xy_min_chess or
+              x_loc_chess > xy_max_chess or
+              y_loc_chess < xy_min_chess or
+              y_loc_chess > xy_max_chess):
+            error_message = "Unexpected value coordinates: \
+x_loc_chess = {0}, y_loc_chess = {1}".format(x_loc_chess, y_loc_chess)
+            raise ValueError(error_message)
+
         y_index = self.grab_y_index(y_loc_chess)
         x_index = self.grab_x_index(x_loc_chess)
         row = self.highlight_rowline(self.description[y_index], x_index)
