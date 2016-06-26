@@ -141,14 +141,6 @@ class Board(object):
             control += 1
         self.board_string = "{0}\n".format(self.board_string)
 
-    def insert_square_into_description(self, description, square):
-        """unfinished function. updates self.description"""
-        """i feel like there is a larger problem here"""
-        """there isn't an easy way to iterate through the "board"""
-        """the board just gets constructed on demand from the description"""
-        """maybe just change the description and functionify board_string?"""
-        return self.description
-
     def highlight_rowline(self, row_string, x_loc):
         """Takes a row from self.description and inserts a highlighted piece
         at x location"""
@@ -191,22 +183,6 @@ class Board(object):
         x_index = self.grab_x_index(x_loc_chess)
         row = self.highlight_rowline(self.description[y_index], x_index)
         self.description[y_index] = row
-        print(self.description)
-
-    def highlight_square(self,x_loc,y_loc):
-        # iterate through board and replace piece with self.highlight_piece
-        # probably gonna have to put board description into class variable
-        # Have a function to sub in the right character in a particular row
-        # Need a function to grab the right row based on y_loc and orientation
-        # what should interface be? pass in x,y into new board instance?
-        result_description = ("rnbqkbnr",
-                              "pppppppp",
-                              "        ",
-                              "        ",
-                              "        ",
-                              "        ",
-                              "P#PPPPPP",
-                              "RNBQKBNR",)
 
     def __str__(self):
         return self.board_string
