@@ -185,7 +185,7 @@ class Board(object):
                 not isinstance(y_loc_chess, int)):
             error_message = "Bad value coordinates: \
 x_loc_chess = {0}, y_loc_chess = {1}".format(x_loc_chess, y_loc_chess)
-            raise TypeError("Board description is not a list")
+            raise TypeError("Coordinates are not ints")
         elif (x_loc_chess < xy_min_chess or
               x_loc_chess > xy_max_chess or
               y_loc_chess < xy_min_chess or
