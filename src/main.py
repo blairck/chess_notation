@@ -6,6 +6,16 @@ import time
 import board
 import conversion
 import games
+from settings import RECORD_FILE
+
+def write_record_to_file(a_string, file_name):
+    with open(file_name, 'w') as f:
+        f.write(a_string)
+
+def get_record_from_file(file_name):
+    with open(file_name, 'r') as f:
+        result = f.readline()
+    return result
 
 if __name__ == '__main__':
     NUMBER_OF_TRIALS = 1
