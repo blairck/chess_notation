@@ -112,7 +112,7 @@ class Board(object):
     Setting orientation=True means that white appears on the bottom."""
     def __init__(self, description, orientation=True):
         self.board_string = ""
-        self.highlight_piece = "#"
+        self.highlight_piece = "@"
         self.orientation = orientation
         self.description = description
         if not isinstance(self.description, list):
