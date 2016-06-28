@@ -1,1 +1,3 @@
-RECORD_FILE = "test.txt"
+NUMBER_OF_TRIALS = 5
+RECORD_FILE = "trial_record.txt"
+SAVE_PROGRESS = True
