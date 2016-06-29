@@ -18,4 +18,4 @@ status: tests lint
 tests:
 	#Just run unit tests and display code coverage result
 	$(ENVIRONMENT)/bin/coverage run test/run_tests.py
-	$(ENVIRONMENT)/bin/coverage report
+	$(ENVIRONMENT)/bin/coverage report -m --skip-covered
