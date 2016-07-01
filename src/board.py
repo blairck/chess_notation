@@ -153,29 +153,25 @@ class Board(object):
         """This grabs the array index based on y_loc_chess and
         orientation. A coordinate with '_chess' refers to the game coordinate,
         as opposed to the array coordinate."""
+        if y_loc_chess > 8 or y_loc_chess < 1:
+            raise ValueError("Invalid y coordinate: {0}".format(y_loc_chess))
         if self.orientation:
             # For when white is on bottom
             return 8 - y_loc_chess
-        elif not self.orientation:
+        else:
             # Black on bottom
             return y_loc_chess-1
-        else:
-            # We don't know what the orientation should be, but don't assume
-            error_message = "Unexpected value: orientation = {0}"
-            raise ValueError(error_message.format(self.orientation))
 
     def grab_x_index(self, x_loc_chess):
         """This grabs the array index based on x_loc_chess and orientation"""
+        if x_loc_chess > 8 or x_loc_chess < 1:
+            raise ValueError("Invalid x coordinate: {0}".format(x_loc_chess))
         if self.orientation:
             # For when white is on bottom
             return x_loc_chess-1
-        elif not self.orientation:
+        else:
             # Black on bottom
             return 8-x_loc_chess
-        else:
-            # We don't know what the orientation should be, but don't assume
-            error_message = "Unexpected value: orientation = {0}"
-            raise ValueError(error_message.format(self.orientation))
 
     def highlight_square(self, x_loc_chess, y_loc_chess):
         """Updates self.description to highlight the given square on the
