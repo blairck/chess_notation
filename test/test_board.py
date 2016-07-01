@@ -231,7 +231,7 @@ class TestBoard(unittest.TestCase):
        |||||||       |||||||       |||||||       |||||||
        |||||||       |||||||       |||||||       |||||||
 |||||||       |||||||       |||||||       |||||||       
-|||||||   #   |||||||       |||||||       |||||||       
+|||||||   @   |||||||       |||||||       |||||||       
 |||||||       |||||||       |||||||       |||||||       
        |||||||       |||||||       |||||||       |||||||
    P   || P ||   P   || P ||   P   || P ||   P   || P ||
@@ -263,7 +263,7 @@ class TestBoard(unittest.TestCase):
 || P ||   P   || P ||   P   || P ||   P   || P ||   P   
 |||||||       |||||||       |||||||       |||||||       
        |||||||       |||||||       |||||||       |||||||
-       |||||||       |||||||       |||||||   #   |||||||
+       |||||||       |||||||       |||||||   @   |||||||
        |||||||       |||||||       |||||||       |||||||
 |||||||       |||||||       |||||||       |||||||       
 |||||||       |||||||       |||||||       |||||||       
@@ -287,7 +287,7 @@ class TestBoard(unittest.TestCase):
         description = self.shared_description
         the_board = board.Board(description)
         actual_result = the_board.highlight_rowline("rnbqkbnr", 2)
-        expected_result = 'rn#qkbnr'
+        expected_result = 'rn@qkbnr'
         self.assertEqual(actual_result, expected_result)
 
     def test_highlight_rowline_bad_index(self):
