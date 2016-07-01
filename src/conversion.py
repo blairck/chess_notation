@@ -28,6 +28,8 @@ NOTATION_MAP = (('a1', 'qr1', 'qr8'), ('b1', 'qn1', 'qn8'),
 
 # Static helper functions
 def coordinate_to_alg(x_chess, y_chess):
+    """Takes chess numerical coordinates and returns an algebraic notation
+    string"""
     xy_min_chess = 1
     xy_max_chess = 8
     if (not isinstance(x_chess, int) or
