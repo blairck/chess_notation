@@ -135,10 +135,7 @@ class Board(object):
                 parity = "odd"
             else:
                 parity = "even"
-            if row:
-                self.board_string += str(RowTiles(parity, row))
-            else:
-                self.board_string += str(RowTiles(parity))
+            self.board_string += str(RowTiles(parity, row))
             control += 1
         self.board_string = "{0}\n".format(self.board_string)
 
