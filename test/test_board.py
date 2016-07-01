@@ -303,6 +303,50 @@ class TestBoard(unittest.TestCase):
         the_board = board.Board(description)
         self.assertRaises(TypeError, the_board.highlight_rowline, 5, 2)
 
+    def test_grab_y_index_orientation_true(self):
+        description = self.shared_description
+        the_board = board.Board(description)
+        actual_result = the_board.grab_y_index(5)
+        expected_result = 3
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_y_index_orientation_false(self):
+        description = self.shared_description
+        the_board = board.Board(description, orientation=False)
+        actual_result = the_board.grab_y_index(7)
+        expected_result = 6
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_y_index_bad_coordinates(self):
+        description = self.shared_description
+        the_board = board.Board(description)
+        self.assertRaises(ValueError, the_board.grab_y_index, 10)
+        self.assertRaises(ValueError, the_board.grab_y_index, 0)
+        self.assertRaises(TypeError, the_board.grab_y_index, "abc")
+        self.assertRaises(TypeError, the_board.grab_y_index, None)
+
+    def test_grab_x_index_orientation_true(self):
+        description = self.shared_description
+        the_board = board.Board(description)
+        actual_result = the_board.grab_x_index(5)
+        expected_result = 4
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_x_index_orientation_false(self):
+        description = self.shared_description
+        the_board = board.Board(description, orientation=False)
+        actual_result = the_board.grab_x_index(7)
+        expected_result = 1
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_x_index_bad_coordinates(self):
+        description = self.shared_description
+        the_board = board.Board(description)
+        self.assertRaises(ValueError, the_board.grab_x_index, 10)
+        self.assertRaises(ValueError, the_board.grab_x_index, 0)
+        self.assertRaises(TypeError, the_board.grab_x_index, "abc")
+        self.assertRaises(TypeError, the_board.grab_x_index, None)
+
     def test_board_description_not_list(self):
         description = ("test string in a tuple")
         self.assertRaises(TypeError, board.Board, description)
