@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This project quizes the user on chess notation and times the responses"""
 
+from copy import copy
 from random import randint
 
 # Static helper functions
@@ -114,7 +115,7 @@ class Board(object):
         self.board_string = ""
         self.highlight_piece = "@"
         self.orientation = orientation
-        self.description = description
+        self.description = copy(description)
         if not isinstance(self.description, list):
             raise TypeError("Board description is not a list")
         self.needs_orienting = True
