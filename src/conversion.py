@@ -25,31 +25,48 @@ NOTATION_MAP = (('a1', 'qr1', 'qr8'), ('b1', 'qn1', 'qn8'),
                 ('b8', 'qn8', 'qn1'), ('c8', 'qb8', 'qb1'), ('d8', 'q8', 'q1'),
                 ('e8', 'k8', 'k1'), ('f8', 'kb8', 'kb1'), ('g8', 'kn8', 'kn1'),
                 ('h8', 'kr8', 'kr1'),)
+XY_MIN_CHESS = 1
+XY_MAX_CHESS = 8
 
 # Static helper functions
+def convert_notation(x_chess, y_chess, notation=None, color=None):
+    """Validates chess coordinates before passing them for conversion"""
+    if not isinstance(x_chess, int) or not isinstance(y_chess, int):
+        template = "Bad value coordinates: x_chess = {0}, y_chess = {1}"
+        error_message = template.format(x_chess, y_chess)
+        raise TypeError("Coordinates are not ints")
+    elif (x_chess < XY_MIN_CHESS or
+          x_chess > XY_MAX_CHESS or
+          y_chess < XY_MIN_CHESS or
+          y_chess > XY_MAX_CHESS):
+        template = "Unexpected coordinate values: x_chess = {0}, y_chess = {1}"
+        error_message = template.format(x_chess, y_chess)
+        raise ValueError(error_message)
+    if notation == "alg":
+        return coordinate_to_alg(x_chess, y_chess)
+    elif notation == "desc":
+        if color not in ("white", "black"):
+            raise ValueError("Unknown player color: {0}".format(color))
+        return coordinate_to_desc(x_chess, y_chess, color)
+    else:
+        raise TypeError("Unknown notation: {0}".format(notation))
+
 def coordinate_to_alg(x_chess, y_chess):
     """Takes chess numerical coordinates and returns an algebraic notation
     string"""
-    xy_min_chess = 1
-    xy_max_chess = 8
-    if (not isinstance(x_chess, int) or
-            not isinstance(y_chess, int)):
-        error_message = "Bad value coordinates: \
-x_chess = {0}, y_chess = {1}".format(x_chess, y_chess)
-        raise TypeError("Coordinates are not ints")
-    elif (x_chess < xy_min_chess or
-          x_chess > xy_max_chess or
-          y_chess < xy_min_chess or
-          y_chess > xy_max_chess):
-        error_message = "Unexpected value coordinates: \
-x_chess = {0}, y_chess = {1}".format(x_chess, y_chess)
-        raise ValueError(error_message)
-
     result = ""
     notation_letters = 'abcdefgh'
     result = result + notation_letters[x_chess-1]
     result = result + str(y_chess)
     return result
+
+def coordinate_to_desc(x_chess, y_chess, color):
+    """Takes chess numerical coordinates and returns a descriptive notation
+    string"""
+    converter = NotationConverter()
+    result = converter.alg_to_desc(coordinate_to_alg(x_chess, y_chess), color)
+    return result
+
 
 class NotationConverter(object):
     """Class converts notation between algebraic and descriptive notation"""
