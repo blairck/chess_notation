@@ -1,0 +1,6 @@
+.coverage
+.DS_Store
+tmp/
+env/
+*.pyc
+trial_record.txt

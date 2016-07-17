@@ -98,6 +98,7 @@ class TestRowTiles(unittest.TestCase):
 class TestStaticFunctions(unittest.TestCase):
     """Tests for static function helpers for board"""
     def test_identify_random_square(self):
+        """Check that we can identify a random square"""
         actual_result_x, actual_result_y = board.identify_random_square()
         expected_result_compare = 0
         self.assertTrue(actual_result_x >= expected_result_compare)
@@ -183,7 +184,7 @@ class TestBoard(unittest.TestCase):
 """
         self.assertEqual(actual_result, expected_result)
 
-    def test_highlight_square_boundaries(self):
+    def test_highlight_square_bounds(self):
         """Make sure we highlight_square gives ValueError for out of bounds
         coordinates"""
         description = self.shared_description
@@ -202,6 +203,7 @@ class TestBoard(unittest.TestCase):
         self.assertRaises(TypeError, the_board.highlight_square, 'ab', 'cd')
 
     def test_highlight_square_good(self):
+        """Check that we can highlight an arbitrary square"""
         description = ["rnbqkbnr",
                        "pppppppp",
                        "        ",
@@ -231,7 +233,7 @@ class TestBoard(unittest.TestCase):
        |||||||       |||||||       |||||||       |||||||
        |||||||       |||||||       |||||||       |||||||
 |||||||       |||||||       |||||||       |||||||       
-|||||||   #   |||||||       |||||||       |||||||       
+|||||||   @   |||||||       |||||||       |||||||       
 |||||||       |||||||       |||||||       |||||||       
        |||||||       |||||||       |||||||       |||||||
    P   || P ||   P   || P ||   P   || P ||   P   || P ||
@@ -243,6 +245,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_highlight_square_reversed(self):
+        """Check that we can highlight a square even while reversed"""
         description = ["rnbqkbnr",
                        "pppppppp",
                        "        ",
@@ -263,7 +266,7 @@ class TestBoard(unittest.TestCase):
 || P ||   P   || P ||   P   || P ||   P   || P ||   P   
 |||||||       |||||||       |||||||       |||||||       
        |||||||       |||||||       |||||||       |||||||
-       |||||||       |||||||       |||||||   #   |||||||
+       |||||||       |||||||       |||||||   @   |||||||
        |||||||       |||||||       |||||||       |||||||
 |||||||       |||||||       |||||||       |||||||       
 |||||||       |||||||       |||||||       |||||||       
@@ -284,13 +287,15 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_highlight_rowline_good(self):
+        """Check happy path"""
         description = self.shared_description
         the_board = board.Board(description)
         actual_result = the_board.highlight_rowline("rnbqkbnr", 2)
-        expected_result = 'rn#qkbnr'
+        expected_result = 'rn@qkbnr'
         self.assertEqual(actual_result, expected_result)
 
-    def test_highlight_rowline_bad_index(self):
+    def test_highlight_rowline_bad(self):
+        """Check exception raising after bad input"""
         description = self.shared_description
         the_board = board.Board(description)
         self.assertRaises(IndexError,
@@ -299,10 +304,62 @@ class TestBoard(unittest.TestCase):
                           25)
 
     def test_highlight_rowline_bad_row(self):
+        """Check exception raising when row is not a string"""
         description = self.shared_description
         the_board = board.Board(description)
         self.assertRaises(TypeError, the_board.highlight_rowline, 5, 2)
 
+    def test_grab_y_index_orient_true(self):
+        """Check with orientation set to True"""
+        description = self.shared_description
+        the_board = board.Board(description)
+        actual_result = the_board.grab_y_index(5)
+        expected_result = 3
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_y_index_orient_false(self):
+        """Check with orientation set to False"""
+        description = self.shared_description
+        the_board = board.Board(description, orientation=False)
+        actual_result = the_board.grab_y_index(7)
+        expected_result = 6
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_y_index_bad(self):
+        """Check error raising with bad coordinates"""
+        description = self.shared_description
+        the_board = board.Board(description)
+        self.assertRaises(ValueError, the_board.grab_y_index, 10)
+        self.assertRaises(ValueError, the_board.grab_y_index, 0)
+        self.assertRaises(TypeError, the_board.grab_y_index, "abc")
+        self.assertRaises(TypeError, the_board.grab_y_index, None)
+
+    def test_grab_x_index_orient_true(self):
+        """Check with orientation set to True"""
+        description = self.shared_description
+        the_board = board.Board(description)
+        actual_result = the_board.grab_x_index(5)
+        expected_result = 4
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_x_index_orient_false(self):
+        """Check with orientation set to False"""
+        description = self.shared_description
+        the_board = board.Board(description, orientation=False)
+        actual_result = the_board.grab_x_index(7)
+        expected_result = 1
+        self.assertEqual(actual_result, expected_result)
+
+    def test_grab_x_index_bad(self):
+        """Check error raising with bad coordinates"""
+        description = self.shared_description
+        the_board = board.Board(description)
+        self.assertRaises(ValueError, the_board.grab_x_index, 10)
+        self.assertRaises(ValueError, the_board.grab_x_index, 0)
+        self.assertRaises(TypeError, the_board.grab_x_index, "abc")
+        self.assertRaises(TypeError, the_board.grab_x_index, None)
+
     def test_board_description_not_list(self):
+        """Check that exception is raised if description is non-list"""
         description = ("test string in a tuple")
         self.assertRaises(TypeError, board.Board, description)

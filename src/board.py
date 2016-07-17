@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This project quizes the user on chess notation and times the responses"""
 
+from copy import copy
 from random import randint
 
 # Static helper functions
@@ -112,9 +113,9 @@ class Board(object):
     Setting orientation=True means that white appears on the bottom."""
     def __init__(self, description, orientation=True):
         self.board_string = ""
-        self.highlight_piece = "#"
+        self.highlight_piece = "@"
         self.orientation = orientation
-        self.description = description
+        self.description = copy(description)
         if not isinstance(self.description, list):
             raise TypeError("Board description is not a list")
         self.needs_orienting = True
@@ -135,10 +136,7 @@ class Board(object):
                 parity = "odd"
             else:
                 parity = "even"
-            if row:
-                self.board_string += str(RowTiles(parity, row))
-            else:
-                self.board_string += str(RowTiles(parity))
+            self.board_string += str(RowTiles(parity, row))
             control += 1
         self.board_string = "{0}\n".format(self.board_string)
 
@@ -153,29 +151,25 @@ class Board(object):
         """This grabs the array index based on y_loc_chess and
         orientation. A coordinate with '_chess' refers to the game coordinate,
         as opposed to the array coordinate."""
+        if y_loc_chess > 8 or y_loc_chess < 1:
+            raise ValueError("Invalid y coordinate: {0}".format(y_loc_chess))
         if self.orientation:
             # For when white is on bottom
             return 8 - y_loc_chess
-        elif not self.orientation:
+        else:
             # Black on bottom
             return y_loc_chess-1
-        else:
-            # We don't know what the orientation should be, but don't assume
-            error_message = "Unexpected value: orientation = {0}"
-            raise ValueError(error_message.format(self.orientation))
 
     def grab_x_index(self, x_loc_chess):
         """This grabs the array index based on x_loc_chess and orientation"""
+        if x_loc_chess > 8 or x_loc_chess < 1:
+            raise ValueError("Invalid x coordinate: {0}".format(x_loc_chess))
         if self.orientation:
             # For when white is on bottom
             return x_loc_chess-1
-        elif not self.orientation:
+        else:
             # Black on bottom
             return 8-x_loc_chess
-        else:
-            # We don't know what the orientation should be, but don't assume
-            error_message = "Unexpected value: orientation = {0}"
-            raise ValueError(error_message.format(self.orientation))
 
     def highlight_square(self, x_loc_chess, y_loc_chess):
         """Updates self.description to highlight the given square on the
