@@ -188,6 +188,15 @@ GAME_POSITIONS.append(["r r   k ",
                        "PB Q  PP",
                        "    RRK ",])
 
+STANDARD_GAME = ["rnbqkbnr",
+                 "pppppppp",
+                 "        ",
+                 "        ",
+                 "        ",
+                 "        ",
+                 "PPPPPPPP",
+                 "RNBQKBNR",]
+
 class GamePositions(object):
     """This class returns a random board positions"""
     def __init__(self):
