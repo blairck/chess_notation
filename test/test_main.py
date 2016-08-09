@@ -217,8 +217,6 @@ class TestMain(unittest.TestCase):
         self.assertEqual(actual_result, user_quit)
 
     # pylint: disable=no-self-use
-    # Mock has its own assert methods, but tests are run by unittest
-    # This means we can't use normal unittest "self.assert" methods
     @patch('games.GamePositions.random_game')
     @patch('board.Board')
     def test_display_board(self, board, rand_game):
