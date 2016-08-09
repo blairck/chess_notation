@@ -125,11 +125,13 @@ class Game(object):
 
     def display_board(self):
         """Display the updated board with highlighted square"""
-        games_source = games.GamePositions()
-        current_board = board.Board(games_source.random_game(),
-                                    orientation=self.orientation)
-        current_board.highlight_square(self.x_loc_chess,
-                                       self.y_loc_chess)
+        if STANDARD_POSITION:
+            position = games.STANDARD_GAME
+        else:
+            games_source = games.GamePositions()
+            position = games_source.random_game()
+        current_board = board.Board(position, orientation=self.orientation)
+        current_board.highlight_square(self.x_loc_chess, self.y_loc_chess)
         current_board.update_board_string()
         print(current_board)
 
