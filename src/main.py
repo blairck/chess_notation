@@ -86,6 +86,9 @@ class Game(object):
             self.orientation = False
 
         self.player_color = random.choice(("white", "black"))
+        if PLAYER_COLOR in ("white", "black"):
+            self.player_color = PLAYER_COLOR
+
         self.x_loc_chess, self.y_loc_chess = board.identify_random_square()
         self.location = conversion.convert_notation(self.x_loc_chess,
                                                     self.y_loc_chess,
