@@ -92,7 +92,7 @@ class Game(object):
         self.x_loc_chess, self.y_loc_chess = board.identify_random_square()
         self.location = conversion.convert_notation(self.x_loc_chess,
                                                     self.y_loc_chess,
-                                                    "alg",
+                                                    NOTATION,
                                                     self.player_color)
 
     def main(self):
