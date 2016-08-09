@@ -80,6 +80,11 @@ class Game(object):
         self.test_mode = test_mode
 
         self.orientation = random.choice((True, False))
+        if ORIENTATION == "white":
+            self.orientation = True
+        elif ORIENTATION == "black":
+            self.orientation = False
+
         self.player_color = random.choice(("white", "black"))
         self.x_loc_chess, self.y_loc_chess = board.identify_random_square()
         self.location = conversion.convert_notation(self.x_loc_chess,

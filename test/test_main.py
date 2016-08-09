@@ -184,6 +184,18 @@ class TestMain(unittest.TestCase):
         self.assertTrue(trial.y_loc_chess)
         self.assertTrue(trial.location)
 
+    def test_settings_black_orientation(self):
+        """Check that orientation is set correctly with black player"""
+        original_value = src.main.ORIENTATION
+        src.main.ORIENTATION = "black"
+
+        trial = main.Game(record_file="test.txt",
+                          save_progress=True,
+                          test_mode=True)
+
+        src.main.ORIENTATION = original_value
+        self.assertEqual(trial.orientation, False)
+
     def test_main_no_quit(self):
         """Test main event loop where user doesn't quit"""
         trial = main.Game(record_file="test.txt", save_progress=True)
