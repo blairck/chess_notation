@@ -128,6 +128,45 @@ class TestMainStaticFunctions(unittest.TestCase):
             self.assertFalse(actual_result)
             self.assertEqual(actual_print, expected_print)
 
+    # pylint: disable=no-self-use
+    # Mock has its own assert methods, but tests are run by unittest
+    # This means we can't use normal unittest "self.assert" methods
+    def test_record_progress_save(self):
+        """Check that game progress is recoreded correctly"""
+        main.write_record_to_file = MagicMock(return_value=None)
+        trial = main.Game(record_file="test.txt", save_progress=True)
+        trial.record_progress()
+
+        main.write_record_to_file.assert_called_once_with('0.0,1', 'test.txt')
+
+    # pylint: disable=no-self-use
+    def test_record_progress_dont_save(self):
+        """Check that no action is taken if save_progress is False"""
+        main.write_record_to_file = MagicMock(return_value=None)
+        trial = main.Game(record_file="test.txt", save_progress=False)
+        trial.record_progress()
+
+        main.write_record_to_file.assert_not_called()
+
+    # pylint: disable=no-self-use
+    def test_display_status_save(self):
+        """Check that display_status_information uses right logic when
+        save_progress is True"""
+        main.get_record_from_file = MagicMock(return_value="305.1,31")
+        trial = main.Game(record_file="test.txt", save_progress=True)
+        trial.display_status_information()
+
+        main.get_record_from_file.assert_called_once_with(trial.record_file)
+
+    # pylint: disable=no-self-use
+    def test_display_status_dont_save(self):
+        """Check that no action is taken if save_progress is False"""
+        main.get_record_from_file = MagicMock(return_value="305.1,31")
+        trial = main.Game(record_file="test.txt", save_progress=False)
+        trial.display_status_information()
+
+        main.get_record_from_file.assert_not_called()
+
 class TestMain(unittest.TestCase):
     """Tests for Main class"""
     def test_settings(self):
@@ -213,39 +252,6 @@ class TestMain(unittest.TestCase):
         actual_result = ub_string.call_count
         expected_result = 2
         self.assertEqual(actual_result, expected_result)
-
-    def test_record_progress_save(self):
-        """Check that game progress is recoreded correctly"""
-        main.write_record_to_file = MagicMock(return_value=None)
-        trial = main.Game(record_file="test.txt", save_progress=True)
-        trial.record_progress()
-
-        main.write_record_to_file.assert_called_once_with('0.0,1', 'test.txt')
-
-    def test_record_progress_dont_save(self):
-        """Check that no action is taken if save_progress is False"""
-        main.write_record_to_file = MagicMock(return_value=None)
-        trial = main.Game(record_file="test.txt", save_progress=False)
-        trial.record_progress()
-
-        main.write_record_to_file.assert_not_called()
-
-    def test_display_status_save(self):
-        """Check that display_status_information uses right logic when
-        save_progress is True"""
-        main.get_record_from_file = MagicMock(return_value="305.1,31")
-        trial = main.Game(record_file="test.txt", save_progress=True)
-        trial.display_status_information()
-
-        main.get_record_from_file.assert_called_once_with(trial.record_file)
-
-    def test_display_status_dont_save(self):
-        """Check that no action is taken if save_progress is False"""
-        main.get_record_from_file = MagicMock(return_value="305.1,31")
-        trial = main.Game(record_file="test.txt", save_progress=False)
-        trial.display_status_information()
-
-        main.get_record_from_file.assert_not_called()
 
     @patch('builtins.input', side_effect=["a1"])
     def test_get_user_input_correct(self, mock_input):
