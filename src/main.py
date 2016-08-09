@@ -155,6 +155,9 @@ Creating a new one after this trial: {0}".format(self.record_file))
             write_record_to_file(record, self.record_file)
 
 if __name__ == '__main__':
+    SETTINGS_OKAY = validate_settings()
+    if not SETTINGS_OKAY:
+        raise ValueError("Something is not configured correctly, exiting.")
     for trial_num in range(NUMBER_OF_TRIALS):
         game_trial = Game()
         if game_trial.main():
