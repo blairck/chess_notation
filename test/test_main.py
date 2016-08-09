@@ -5,13 +5,167 @@ import sys
 import unittest
 import unittest.mock
 from unittest.mock import mock_open, MagicMock, patch
+from contextlib import contextmanager
+from io import StringIO
 
 # pylint: disable=wrong-import-position
 # Hacky path nonsense to get src folder on the Python path
 SCRIPT_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
 sys.path.append('{0}/../src'.format(SCRIPT_PATH))
+import src
 from src import main
-from src.main import get_record_from_file, write_record_to_file
+from src.main import (get_record_from_file,
+                      validate_settings,
+                      write_record_to_file)
+
+@contextmanager
+def captured_output():
+    """ Redirects stdout to StringIO so we can inspect Print statements """
+    new_out = StringIO()
+    old_out = sys.stdout
+    try:
+        sys.stdout = new_out
+        yield sys.stdout
+    finally:
+        sys.stdout = old_out
+
+class TestMainStaticFunctions(unittest.TestCase):
+    """Tests for static function helpers"""
+    def test_vs_good(self):
+        """Check that validate_settings works correctly"""
+        actual_result = validate_settings()
+        expected_result = True
+        self.assertEqual(actual_result, expected_result)
+
+    def test_vs_bad_notation(self):
+        """Check that the validate_settings works with bad notation"""
+        with captured_output() as out:
+            original_value = src.main.NOTATION
+            src.main.NOTATION = "invalid"
+
+            actual_result = validate_settings()
+            actual_print = out.getvalue().strip()
+            expected_print = ("Configuration error, "
+                              "NOTATION has an unexpected value: invalid")
+
+            src.main.NOTATION = original_value
+            self.assertFalse(actual_result)
+            self.assertEqual(actual_print, expected_print)
+
+    def test_vs_bad_trials(self):
+        """Check that the validate_settings works with bad trials"""
+        with captured_output() as out:
+            original_value = src.main.NUMBER_OF_TRIALS
+            src.main.NUMBER_OF_TRIALS = "a string"
+
+            actual_result = validate_settings()
+            actual_print = out.getvalue().strip()
+            expected_print = ("Configuration error, "
+                              "NUMBER_OF_TRIALS is not an int: a string")
+
+            src.main.NUMBER_OF_TRIALS = original_value
+            self.assertFalse(actual_result)
+            self.assertEqual(actual_print, expected_print)
+
+    def test_vs_bad_orientation(self):
+        """Check that the validate_settings works with bad orientation"""
+        with captured_output() as out:
+            original_value = src.main.ORIENTATION
+            src.main.ORIENTATION = "invalid"
+
+            actual_result = validate_settings()
+            actual_print = out.getvalue().strip()
+            expected_print = ("Configuration error, "
+                              "ORIENTATION has an unexpected value: invalid")
+
+            src.main.ORIENTATION = original_value
+            self.assertFalse(actual_result)
+            self.assertEqual(actual_print, expected_print)
+
+    def test_vs_bad_player_color(self):
+        """Check that the validate_settings works with bad player color"""
+        with captured_output() as out:
+            original_notation = src.main.PLAYER_COLOR
+            src.main.PLAYER_COLOR = "invalid"
+
+            actual_result = validate_settings()
+            actual_print = out.getvalue().strip()
+            expected_print = ("Configuration error, "
+                              "PLAYER_COLOR has an unexpected value: invalid")
+
+            src.main.PLAYER_COLOR = original_notation
+            self.assertFalse(actual_result)
+            self.assertEqual(actual_print, expected_print)
+
+    def test_vs_bad_record_file(self):
+        """Check that the validate_settings works with bad record file"""
+        with captured_output() as out:
+            original_value = src.main.RECORD_FILE
+            src.main.RECORD_FILE = 12345
+
+            actual_result = validate_settings()
+            actual_print = out.getvalue().strip()
+            expected_print = ("Configuration error, "
+                              "RECORD_FILE is not a string: 12345")
+
+            src.main.RECORD_FILE = original_value
+            self.assertFalse(actual_result)
+            self.assertEqual(actual_print, expected_print)
+
+    def test_vs_bad_position(self):
+        """Check that the validate_settings works with bad position"""
+        with captured_output() as out:
+            original_value = src.main.STANDARD_POSITION
+            src.main.STANDARD_POSITION = "a string"
+
+            actual_result = validate_settings()
+            actual_print = out.getvalue().strip()
+            expected_print = ("Configuration error, "
+                              "STANDARD_POSITION is not an int (bool): "
+                              "a string")
+
+            src.main.STANDARD_POSITION = original_value
+            self.assertFalse(actual_result)
+            self.assertEqual(actual_print, expected_print)
+
+    # pylint: disable=no-self-use
+    # Mock has its own assert methods, but tests are run by unittest
+    # This means we can't use normal unittest "self.assert" methods
+    def test_record_progress_save(self):
+        """Check that game progress is recoreded correctly"""
+        main.write_record_to_file = MagicMock(return_value=None)
+        trial = main.Game(record_file="test.txt", save_progress=True)
+        trial.record_progress()
+
+        main.write_record_to_file.assert_called_once_with('0.0,1', 'test.txt')
+
+    # pylint: disable=no-self-use
+    def test_record_progress_dont_save(self):
+        """Check that no action is taken if save_progress is False"""
+        main.write_record_to_file = MagicMock(return_value=None)
+        trial = main.Game(record_file="test.txt", save_progress=False)
+        trial.record_progress()
+
+        main.write_record_to_file.assert_not_called()
+
+    # pylint: disable=no-self-use
+    def test_display_status_save(self):
+        """Check that display_status_information uses right logic when
+        save_progress is True"""
+        main.get_record_from_file = MagicMock(return_value="305.1,31")
+        trial = main.Game(record_file="test.txt", save_progress=True)
+        trial.display_status_information()
+
+        main.get_record_from_file.assert_called_once_with(trial.record_file)
+
+    # pylint: disable=no-self-use
+    def test_display_status_dont_save(self):
+        """Check that no action is taken if save_progress is False"""
+        main.get_record_from_file = MagicMock(return_value="305.1,31")
+        trial = main.Game(record_file="test.txt", save_progress=False)
+        trial.display_status_information()
+
+        main.get_record_from_file.assert_not_called()
 
 class TestMain(unittest.TestCase):
     """Tests for Main class"""
@@ -29,6 +183,18 @@ class TestMain(unittest.TestCase):
         self.assertTrue(trial.x_loc_chess)
         self.assertTrue(trial.y_loc_chess)
         self.assertTrue(trial.location)
+
+    def test_settings_black_orientation(self):
+        """Check that orientation is set correctly with black player"""
+        original_value = src.main.ORIENTATION
+        src.main.ORIENTATION = "black"
+
+        trial = main.Game(record_file="test.txt",
+                          save_progress=True,
+                          test_mode=True)
+
+        src.main.ORIENTATION = original_value
+        self.assertEqual(trial.orientation, False)
 
     def test_main_no_quit(self):
         """Test main event loop where user doesn't quit"""
@@ -63,8 +229,6 @@ class TestMain(unittest.TestCase):
         self.assertEqual(actual_result, user_quit)
 
     # pylint: disable=no-self-use
-    # Mock has its own assert methods, but tests are run by unittest
-    # This means we can't use normal unittest "self.assert" methods
     @patch('games.GamePositions.random_game')
     @patch('board.Board')
     def test_display_board(self, board, rand_game):
@@ -98,39 +262,6 @@ class TestMain(unittest.TestCase):
         actual_result = ub_string.call_count
         expected_result = 2
         self.assertEqual(actual_result, expected_result)
-
-    def test_record_progress_save(self):
-        """Check that game progress is recoreded correctly"""
-        main.write_record_to_file = MagicMock(return_value=None)
-        trial = main.Game(record_file="test.txt", save_progress=True)
-        trial.record_progress()
-
-        main.write_record_to_file.assert_called_once_with('0.0,1', 'test.txt')
-
-    def test_record_progress_dont_save(self):
-        """Check that no action is taken if save_progress is False"""
-        main.write_record_to_file = MagicMock(return_value=None)
-        trial = main.Game(record_file="test.txt", save_progress=False)
-        trial.record_progress()
-
-        main.write_record_to_file.assert_not_called()
-
-    def test_display_status_save(self):
-        """Check that display_status_information uses right logic when
-        save_progress is True"""
-        main.get_record_from_file = MagicMock(return_value="305.1,31")
-        trial = main.Game(record_file="test.txt", save_progress=True)
-        trial.display_status_information()
-
-        main.get_record_from_file.assert_called_once_with(trial.record_file)
-
-    def test_display_status_dont_save(self):
-        """Check that no action is taken if save_progress is False"""
-        main.get_record_from_file = MagicMock(return_value="305.1,31")
-        trial = main.Game(record_file="test.txt", save_progress=False)
-        trial.display_status_information()
-
-        main.get_record_from_file.assert_not_called()
 
     @patch('builtins.input', side_effect=["a1"])
     def test_get_user_input_correct(self, mock_input):

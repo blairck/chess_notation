@@ -6,9 +6,13 @@ import time
 import board
 import conversion
 import games
-from settings import (NUMBER_OF_TRIALS,
+from settings import (NOTATION,
+                      NUMBER_OF_TRIALS,
+                      ORIENTATION,
+                      PLAYER_COLOR,
                       RECORD_FILE,
-                      SAVE_PROGRESS)
+                      SAVE_PROGRESS,
+                      STANDARD_POSITION)
 
 # Static helper functions
 def write_record_to_file(a_string, file_name):
@@ -20,6 +24,39 @@ def get_record_from_file(file_name):
     """Get first (and only) line back from file_name and return it"""
     with open(file_name, 'r') as record_file:
         result = record_file.readline()
+    return result
+
+def validate_settings():
+    """ Sanity check on the settings. Returns True if okay, False otherwise.
+    If multiple settings are wrong, we bail out after the first."""
+    result = True
+    if NOTATION not in ("alg", "desc"):
+        message = "Configuration error, NOTATION has an unexpected value: {0}"
+        print(message.format(NOTATION))
+        result = False
+    elif not isinstance(NUMBER_OF_TRIALS, int):
+        message = "Configuration error, NUMBER_OF_TRIALS is not an int: {0}"
+        print(message.format(NUMBER_OF_TRIALS))
+        result = False
+    elif ORIENTATION not in ("white", "black", "random"):
+        message = ("Configuration error, "
+                   "ORIENTATION has an unexpected value: {0}")
+        print(message.format(ORIENTATION))
+        result = False
+    elif PLAYER_COLOR not in ("white", "black", "random"):
+        message = ("Configuration error, "
+                   "PLAYER_COLOR has an unexpected value: {0}")
+        print(message.format(PLAYER_COLOR))
+        result = False
+    elif not isinstance(RECORD_FILE, str):
+        message = "Configuration error, RECORD_FILE is not a string: {0}"
+        print(message.format(RECORD_FILE))
+        result = False
+    elif not isinstance(STANDARD_POSITION, int):
+        message = ("Configuration error, "
+                   "STANDARD_POSITION is not an int (bool): {0}")
+        print(message.format(STANDARD_POSITION))
+        result = False
     return result
 
 class Game(object):
@@ -43,11 +80,19 @@ class Game(object):
         self.test_mode = test_mode
 
         self.orientation = random.choice((True, False))
+        if ORIENTATION == "white":
+            self.orientation = True
+        elif ORIENTATION == "black":
+            self.orientation = False
+
         self.player_color = random.choice(("white", "black"))
+        if PLAYER_COLOR in ("white", "black"):
+            self.player_color = PLAYER_COLOR
+
         self.x_loc_chess, self.y_loc_chess = board.identify_random_square()
         self.location = conversion.convert_notation(self.x_loc_chess,
                                                     self.y_loc_chess,
-                                                    "alg",
+                                                    NOTATION,
                                                     self.player_color)
 
     def main(self):
@@ -80,11 +125,13 @@ class Game(object):
 
     def display_board(self):
         """Display the updated board with highlighted square"""
-        games_source = games.GamePositions()
-        current_board = board.Board(games_source.random_game(),
-                                    orientation=self.orientation)
-        current_board.highlight_square(self.x_loc_chess,
-                                       self.y_loc_chess)
+        if STANDARD_POSITION:
+            position = games.STANDARD_GAME
+        else:
+            games_source = games.GamePositions()
+            position = games_source.random_game()
+        current_board = board.Board(position, orientation=self.orientation)
+        current_board.highlight_square(self.x_loc_chess, self.y_loc_chess)
         current_board.update_board_string()
         print(current_board)
 
@@ -118,6 +165,9 @@ Creating a new one after this trial: {0}".format(self.record_file))
             write_record_to_file(record, self.record_file)
 
 if __name__ == '__main__':
+    SETTINGS_OKAY = validate_settings()
+    if not SETTINGS_OKAY:
+        raise ValueError("Something is not configured correctly, exiting.")
     for trial_num in range(NUMBER_OF_TRIALS):
         game_trial = Game()
         if game_trial.main():
