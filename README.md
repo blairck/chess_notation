@@ -22,6 +22,7 @@ $ make run
 #Run the game
 env/bin/python src/main.py
 
+```
        |||||||       |||||||       |||||||       |||||||
    R   |||||||       |||||||   R   |||||||   K   |||||||
        |||||||       |||||||       |||||||       |||||||
@@ -46,6 +47,7 @@ env/bin/python src/main.py
 |||||||       |||||||       |||||||       |||||||       
 |||||||       |||||||       || r ||       || k ||       
 |||||||       |||||||       |||||||       |||||||       
+```
 
 No record file found.
 Creating a new one after this trial: trial_record.txt
