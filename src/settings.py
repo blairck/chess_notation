@@ -4,10 +4,10 @@
 NOTATION = "alg"
 
 # Number of trials the player will play before the program exits
-NUMBER_OF_TRIALS = 5
+NUMBER_OF_TRIALS = 10
 
 # Player that appears on bottom. Can be "white" or "black" or "random"
-ORIENTATION = "white"
+ORIENTATION = "random"
 
 # PLAYER_COLOR = "white" or "black" or "random". Player plays this color
 # This setting only matters if you have NOTATION set to descriptive,
