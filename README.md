@@ -1,10 +1,10 @@
 ### Description ###
-This is a console-based game to quiz user on chess notation. This project is
-also meant to be an exercise in applying best practices of software
-development such as: test driven development, static analyzer for
-style, PEP-8 standard, unit tests, and measure code coverage.
+This is a console-based game to quiz players on chess notation. This project is
+also meant to be an exercise in applying best practices of software development
+such as: test driven development, static analyzer for style, PEP-8 standard,
+unit tests, and measure code coverage.
 
-Project Status: Maintenance
+Project Status: Version 1.0.0 is available. This project is now in maintenance.
 
 ### Features ###
 * Timed trials of identifying squares on a chess board
@@ -75,8 +75,9 @@ ignored.
 starting chess position) or False (a random game)
 
 ### Troubleshooting ###
-* If you try to run src/main.py and you get a FileNotFound error (like below) this probably means you are running Python 2. Chess_notation requires Python 3.5 or
-later.
+* If you try to run src/main.py and you get a FileNotFound error (like below)
+this probably means you are running Python 2. Chess_notation requires Python
+3.5 or later.
 ```
 Traceback (most recent call last):
   File "src/main.py", line 173, in <module>
