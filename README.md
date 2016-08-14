@@ -55,18 +55,13 @@ Enter highlighted square, or 'quit':
 * NOTATION can be "alg" (algabraic) or "desc" (descriptive)
 * NUMBER_OF_TRIALS determines the trials the player will play before the
 program exits
-
 * ORIENTATION determines which player that appears on bottom. Can be "white" or
 "black" or "random"
-
 * PLAYER_COLOR = "white" or "black" or "random". Player plays this color This
 setting only matters if you have NOTATION set to descriptive, otherwise it is
 ignored.
-
 * RECORD_FILE is where the player's average trial times are stored
-
 * SAVE_PROGRESS is whether to save trial times or not. Can be True or False
-
 * STANDARD_POSITION is the layout of chess pieces. This can be True (regular
 starting chess position) or False (a random game)
 
