@@ -58,6 +58,9 @@ black pieces are lowercase letters, so the board here is from black's
 perspective.
 
 ### Configuring the game ###
+The game can be modified in a number of ways. To do this edit the
+src/settings.py file. Just change any of the following values to suit your
+play style. Restart the game to use the updating settings. 
 * NOTATION can be "alg" (algebraic) or "desc" (descriptive)
 * NUMBER_OF_TRIALS determines the trials the player will play before the
 program exits
