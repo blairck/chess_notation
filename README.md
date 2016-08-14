@@ -1,26 +1,25 @@
-# Description #
-
+### Description ###
 This is a console-based game to quiz user on chess notation. This project is
 also meant to be an exercise in applying best practices of software
 development such as: test driven development, static analyzer for
-style, PEP-8 standard, unit test everything, and measure code coverage.
+style, PEP-8 standard, unit tests, and measure code coverage.
 
 Project Status: Maintenance
 
 ### Features ###
-
 * Timed trials of identifying squares on a chess board
 * Algebraic or descriptive notation
 * Saves average time
 * Configurable
 
 ### Getting Started ###
+* To get started, just run main.py. Make sure you have Python 3 installed:
 
-* To get started
+```
+$ python src/main.py
+```
 
-$ make run
-#Run the game
-env/bin/python src/main.py
+* The game will then start, which will begin like so:
 
 ```
        |||||||       |||||||       |||||||       |||||||
@@ -47,14 +46,19 @@ env/bin/python src/main.py
 |||||||       |||||||       |||||||       |||||||       
 |||||||       |||||||       || r ||       || k ||       
 |||||||       |||||||       |||||||       |||||||       
-```
 
 No record file found.
 Creating a new one after this trial: trial_record.txt
 Enter highlighted square, or 'quit': 
+```
+
+* Play will proceed from there. Simply identify the square that the '@' symbol
+is in. In this example, the square is e7.  White pieces are capital letters and
+black pieces are lowercase letters, so the board here is from black's
+perspective.
 
 ### Configuring the game ###
-* NOTATION can be "alg" (algabraic) or "desc" (descriptive)
+* NOTATION can be "alg" (algebraic) or "desc" (descriptive)
 * NUMBER_OF_TRIALS determines the trials the player will play before the
 program exits
 * ORIENTATION determines which player that appears on bottom. Can be "white" or
@@ -68,9 +72,9 @@ ignored.
 starting chess position) or False (a random game)
 
 ### Troubleshooting ###
-
-* If you try to run src/main.py and you get a FileNotFound error (below) this probably means you are running Python 2. Chess_notation requires Python 3.5 or
+* If you try to run src/main.py and you get a FileNotFound error (like below) this probably means you are running Python 2. Chess_notation requires Python 3.5 or
 later.
+```
 Traceback (most recent call last):
   File "src/main.py", line 173, in <module>
     if game_trial.main():
@@ -79,9 +83,9 @@ Traceback (most recent call last):
   File "src/main.py", line 154, in display_status_information
     except FileNotFoundError:
 NameError: global name 'FileNotFoundError' is not defined
+```
 
 ### Requirements ###
-
 To use:
 * Python 3.5
 
@@ -92,5 +96,7 @@ For developers:
 * Coverage
 
 ### Todo ###
-
 * See: https://github.com/blairck/chess_notation/issues
+
+### Version History ###
+* 1.0.0: Initial release
